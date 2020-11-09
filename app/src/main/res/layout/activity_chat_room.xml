@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/id_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="#fff"
+                    android:text="Chat con {persona}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:id="@+id/messageAttachemntsArealayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:orientation="horizontal"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnLoadImageAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_gallery" />
+
+        <ImageButton
+            android:id="@+id/btnLoadFileAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_dialog_email" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sendTextArealayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:orientation="horizontal"
+        android:padding="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/messageAttachemntsArealayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/txtMessageToSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
+
+        <ImageButton
+            android:id="@+id/btnSendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_send" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChatRoom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#EAEAEA"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/sendTextArealayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+</androidx.constraintlayout.widget.ConstraintLayout>
