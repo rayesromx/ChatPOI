@@ -25,13 +25,15 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
         val fragAdmin = this as IFragmentAdmin
         changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
 
+        var ctx = this
+
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
 
                 when (tab?.position) {
                     0 -> changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
                     1 -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
-                    2 -> changeFragment(MainTeamsFragment(), "MainTeamsFragment")
+                    2 -> changeFragment(MainTeamsFragment(ctx), "MainTeamsFragment")
                     3 -> changeFragment(MainTasksFragment(fragAdmin), "MainTasksFragment")
                     else -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
                 }
