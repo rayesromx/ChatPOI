@@ -110,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tool:listitem="@layout/item_view_post_comment"
-
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <LinearLayout
