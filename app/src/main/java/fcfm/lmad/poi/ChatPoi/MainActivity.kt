@@ -56,8 +56,9 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
     override fun launchActivity(type: Int){
         var intent : Intent = Intent(this,ChatRoomActivity::class.java)
         when(type){
-            0 ->intent = Intent(this,ChatRoomActivity::class.java)
-            1 ->intent = Intent(this,ChatRoomActivity::class.java) //descarga de archivo
+            0 -> intent = Intent(this,ChatRoomActivity::class.java)
+            1 -> intent = Intent(this,ChatRoomActivity::class.java) //descarga de archivo
+            3 -> intent = Intent(this,TaskActivity::class.java)
         }
 
         startActivity(intent)
