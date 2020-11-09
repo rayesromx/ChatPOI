@@ -22,18 +22,15 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var ctx = this
         val fragAdmin = this as IFragmentAdmin
         changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
-
-        var ctx = this
-
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-
                 when (tab?.position) {
                     0 -> changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
                     1 -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
-                    2 -> changeFragment(MainTeamsFragment(ctx), "MainTeamsFragment")
+                    2 -> changeFragment(MainTeamsFragment(ctx,fragAdmin), "MainTeamsFragment")
                     3 -> changeFragment(MainTasksFragment(fragAdmin), "MainTasksFragment")
                     else -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
                 }
@@ -46,7 +43,6 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
             }
         })
     }
-
 
      override fun changeFragment(fragment: Fragment, tag: String) {
         val currentFragment = supportFragmentManager.findFragmentByTag(tag)
@@ -61,6 +57,7 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
             0 -> intent = Intent(this,ChatRoomActivity::class.java)
             1 -> intent = Intent(this,ChatRoomActivity::class.java) //descarga de archivo
             3 -> intent = Intent(this,TaskActivity::class.java)
+            5 -> intent = Intent(this,TeamActivity::class.java)
         }
 
         startActivity(intent)

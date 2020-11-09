@@ -1,6 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.models
 
-data class ChatRoomFile (
+data class RoomFile (
     val name: String,
     val type: String,
     val url: String,

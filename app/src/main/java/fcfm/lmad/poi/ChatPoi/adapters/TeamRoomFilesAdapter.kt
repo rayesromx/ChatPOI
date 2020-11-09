@@ -9,13 +9,12 @@ import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.models.RoomFile
 import kotlinx.android.synthetic.main.item_view_chat_room_file.view.*
 
-class ChatRoomFilesAdapter(
+class TeamRoomFilesAdapter(
     private val roomFileList: List<RoomFile>,
     val fragAdmin: IFragmentAdmin
-) : RecyclerView.Adapter<ChatRoomFilesAdapter.ChatRoomViewHolder>() {
+) : RecyclerView.Adapter<TeamRoomFilesAdapter.TeamRoomViewHolder>() {
 
-
-    inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TeamRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentFile: RoomFile) {
             itemView.chat_room_file_name.text = currentFile.name
             itemView.chat_room_file_time.text = currentFile.time
@@ -24,12 +23,12 @@ class ChatRoomFilesAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRoomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamRoomViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.item_view_chat_room_file, parent, false)
-        return ChatRoomViewHolder(view)
+        return TeamRoomViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ChatRoomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TeamRoomViewHolder, position: Int) {
         holder.bindData(roomFileList[position])
     }
 

@@ -3,7 +3,7 @@ package fcfm.lmad.poi.ChatPoi.viewModels
 import androidx.lifecycle.ViewModel
 import fcfm.lmad.poi.ChatPoi.models.RoomFile
 
-class ChatRoomFilesViewModel : ViewModel() {
+class TeamRoomFilesViewModel : ViewModel() {
     val modelList = mutableListOf<RoomFile>()
 
     fun load() {

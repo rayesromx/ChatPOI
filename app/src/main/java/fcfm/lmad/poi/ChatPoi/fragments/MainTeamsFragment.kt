@@ -7,13 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.viewModels.MainTeamsViewModel
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.CustomExpandableListAdapter
 import kotlinx.android.synthetic.main.main_teams_fragment.view.*
 
 class MainTeamsFragment (
-      private val ctx: Context
+      private val ctx: Context,
+      val fragAdmin: IFragmentAdmin
 ) : Fragment() {
 
     private lateinit var rootView: View
@@ -30,7 +32,7 @@ class MainTeamsFragment (
         rootView = inflater.inflate(R.layout.main_teams_fragment, container, false)
         swhoList()
 
-        val adapter = CustomExpandableListAdapter(ctx,headerList,itemList)
+        val adapter = CustomExpandableListAdapter(ctx,headerList,itemList,fragAdmin)
         rootView.llMainTeamsContainer.setAdapter(adapter)
 
         return rootView
