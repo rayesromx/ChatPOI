@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.fragments.MainChatsFragment
 import fcfm.lmad.poi.ChatPoi.models.Alert
 import kotlinx.android.synthetic.main.item_view_alert.view.*
 
@@ -18,13 +17,13 @@ class MainAlertsFragmentAdapter(
 
     inner class AlertViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentAlert: Alert) {
-            itemView.main_alert_sender.text = currentAlert.sender
-            itemView.chat_room_file_name.text = currentAlert.from
-            itemView.chat_room_file_time.text = currentAlert.time
-            itemView.chat_room_file_type.text = currentAlert.message
+            itemView.task_name.text = currentAlert.sender
+            itemView.task_description.text = currentAlert.from
+            itemView.task_points.text = currentAlert.time
+            itemView.task_due_date.text = currentAlert.message
             //itemView.main_alert_icon.text = currentAlert.icon
             //itemView.main_alert_image.text = currentAlert.image
-            itemView.setOnClickListener{ fragAdmin.changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")}
+            //itemView.setOnClickListener{ fragAdmin.changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")}
         }
     }
 

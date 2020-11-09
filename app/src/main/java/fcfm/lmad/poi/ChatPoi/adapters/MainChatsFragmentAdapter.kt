@@ -8,6 +8,8 @@ import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.models.Chat
 import kotlinx.android.synthetic.main.item_view_alert.view.*
+import kotlinx.android.synthetic.main.item_view_alert.view.task_due_date
+import kotlinx.android.synthetic.main.item_view_chat.view.*
 
 class MainChatsFragmentAdapter(
     private val chatList: List<Chat>,
@@ -17,11 +19,11 @@ class MainChatsFragmentAdapter(
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentChat: Chat) {
-            itemView.chat_room_file_name.text = currentChat.from
-            itemView.chat_room_file_time.text = currentChat.time
-            itemView.chat_room_file_type.text = currentChat.message
-            //itemView.main_alert_image.text = currentAlert.image
-            itemView.setOnClickListener{ fragAdmin.launchActivity()}
+            itemView.main_chat_from.text = currentChat.from
+            itemView.main_chat_time.text = currentChat.time
+            itemView.main_chat_message.text = currentChat.message
+            //itemView.main_chat_image.text = currentAlert.image
+            itemView.setOnClickListener{ fragAdmin.launchActivity(0)}
         }
     }
 

@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.models.ChatRoomFile
-import fcfm.lmad.poi.ChatPoi.models.ChatRoomMessage
 import kotlinx.android.synthetic.main.item_view_alert.view.*
+import kotlinx.android.synthetic.main.item_view_alert.view.task_description
+import kotlinx.android.synthetic.main.item_view_alert.view.task_points
+import kotlinx.android.synthetic.main.item_view_chat_room_file.view.*
 
 class ChatRoomFilesAdapter(
     private val chatRoomFileList: List<ChatRoomFile>,
@@ -21,7 +23,7 @@ class ChatRoomFilesAdapter(
             itemView.chat_room_file_name.text = currentFile.name
             itemView.chat_room_file_time.text = currentFile.time
             //itemView.main_alert_image.text = currentAlert.image
-            //itemView.setOnClickListener{ fragAdmin.launchActivity()}
+            itemView.setOnClickListener{ fragAdmin.launchActivity(1)}
         }
     }
 

@@ -3,6 +3,7 @@ package fcfm.lmad.poi.ChatPoi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import fcfm.lmad.poi.ChatPoi.fragments.*
@@ -42,9 +43,7 @@ class ChatRoomActivity : AppCompatActivity(),IFragmentAdmin  {
         }
     }
 
-    override fun launchActivity(){
-        var intent = Intent(this,ChatRoomActivity::class.java)
-
-        startActivity(intent)
+    override fun launchActivity(type: Int){
+        Toast.makeText(this, "Abriendo archivo...", Toast.LENGTH_SHORT).show()
     }
 }

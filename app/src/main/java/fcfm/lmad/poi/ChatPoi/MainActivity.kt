@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 interface IFragmentAdmin{
     fun changeFragment(fragment: Fragment, tag: String)
-    fun launchActivity()
+    fun launchActivity(type: Int)
 }
 
 class MainActivity : AppCompatActivity(),IFragmentAdmin {
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
         setContentView(R.layout.activity_main)
 
         val fragAdmin = this as IFragmentAdmin
+        changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
                     0 -> changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
                     1 -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
                     2 -> changeFragment(MainTeamsFragment(), "MainTeamsFragment")
-                    3 -> changeFragment(MainTasksFragment(), "MainTasksFragment")
+                    3 -> changeFragment(MainTasksFragment(fragAdmin), "MainTasksFragment")
                     else -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
                 }
             }
@@ -52,8 +53,12 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
         }
     }
 
-    override fun launchActivity(){
-        var intent = Intent(this,ChatRoomActivity::class.java)
+    override fun launchActivity(type: Int){
+        var intent : Intent = Intent(this,ChatRoomActivity::class.java)
+        when(type){
+            0 ->intent = Intent(this,ChatRoomActivity::class.java)
+            1 ->intent = Intent(this,ChatRoomActivity::class.java) //descarga de archivo
+        }
 
         startActivity(intent)
     }

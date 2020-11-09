@@ -6,28 +6,47 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.viewModels.MainTasksViewModel
 import fcfm.lmad.poi.ChatPoi.R
+import fcfm.lmad.poi.ChatPoi.adapters.MainAlertsFragmentAdapter
+import fcfm.lmad.poi.ChatPoi.adapters.MainTasksFragmentAdapter
+import fcfm.lmad.poi.ChatPoi.viewModels.MainAlertsViewModel
+import kotlinx.android.synthetic.main.main_alerts_fragment.view.*
+import kotlinx.android.synthetic.main.main_alerts_fragment.view.rvMainAlertFrag
+import kotlinx.android.synthetic.main.main_tasks_fragment.view.*
 
-class MainTasksFragment : Fragment() {
+class MainTasksFragment(
+    var fragAdmin: IFragmentAdmin
+) : Fragment() {
 
-    companion object {
-        fun newInstance() = MainTasksFragment()
-    }
-
+    private lateinit var rootView: View
+    lateinit var adapter: MainTasksFragmentAdapter
     private lateinit var viewModel: MainTasksViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.main_tasks_fragment, container, false)
+        rootView = inflater.inflate(R.layout.main_tasks_fragment, container, false)
+        initializeVM()
+        return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainTasksViewModel::class.java)
-        // TODO: Use the ViewModel
+        initializeVM()
     }
 
+    private fun initializeVM()
+    {
+        if (!this::viewModel.isInitialized)
+        {
+            viewModel = ViewModelProvider(this).get(MainTasksViewModel::class.java)
+            viewModel.load()
+            adapter = MainTasksFragmentAdapter(viewModel.modelList,fragAdmin)
+            rootView.rvMainTaskFrag.adapter = adapter
+        }
+    }
 }
