@@ -8,12 +8,13 @@
     android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
+        android:id="@+id/chatRoomAppBarLayout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/id_toolbar"
@@ -21,15 +22,15 @@
             android:layout_height="50dp">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="#fff"
-                    android:text="Chat con {persona}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="Chat con {persona}"
+                    android:textColor="#fff" />
 
             </LinearLayout>
 
@@ -37,6 +38,28 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/chatRoomOptionTabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chatRoomAppBarLayout">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabChatRoomChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chat" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabChatRoomFiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Archivos" />
+
+
+    </com.google.android.material.tabs.TabLayout>
 
     <LinearLayout
         android:id="@+id/messageAttachemntsArealayout"
@@ -90,14 +113,16 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChatRoom"
+    <FrameLayout
+        android:id="@+id/chatRoomFrameContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#EAEAEA"
+        android:background="@color/white"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/sendTextArealayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/chatRoomOptionTabLayout"  />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

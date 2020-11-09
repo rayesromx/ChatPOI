@@ -19,8 +19,8 @@ class MainAlertsFragmentAdapter(
     inner class AlertViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentAlert: Alert) {
             itemView.main_alert_sender.text = currentAlert.sender
-            itemView.main_alert_from.text = currentAlert.from
-            itemView.main_alert_time.text = currentAlert.time
+            itemView.chat_message.text = currentAlert.from
+            itemView.chat_time.text = currentAlert.time
             itemView.main_alert_message.text = currentAlert.message
             //itemView.main_alert_icon.text = currentAlert.icon
             //itemView.main_alert_image.text = currentAlert.image
