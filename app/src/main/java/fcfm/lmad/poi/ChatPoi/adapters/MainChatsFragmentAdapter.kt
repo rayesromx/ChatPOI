@@ -17,9 +17,9 @@ class MainChatsFragmentAdapter(
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentChat: Chat) {
-            itemView.chat_message.text = currentChat.from
-            itemView.chat_time.text = currentChat.time
-            itemView.main_alert_message.text = currentChat.message
+            itemView.chat_room_file_name.text = currentChat.from
+            itemView.chat_room_file_time.text = currentChat.time
+            itemView.chat_room_file_type.text = currentChat.message
             //itemView.main_alert_image.text = currentAlert.image
             itemView.setOnClickListener{ fragAdmin.launchActivity()}
         }

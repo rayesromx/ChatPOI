@@ -19,9 +19,9 @@ class MainAlertsFragmentAdapter(
     inner class AlertViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentAlert: Alert) {
             itemView.main_alert_sender.text = currentAlert.sender
-            itemView.chat_message.text = currentAlert.from
-            itemView.chat_time.text = currentAlert.time
-            itemView.main_alert_message.text = currentAlert.message
+            itemView.chat_room_file_name.text = currentAlert.from
+            itemView.chat_room_file_time.text = currentAlert.time
+            itemView.chat_room_file_type.text = currentAlert.message
             //itemView.main_alert_icon.text = currentAlert.icon
             //itemView.main_alert_image.text = currentAlert.image
             itemView.setOnClickListener{ fragAdmin.changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")}

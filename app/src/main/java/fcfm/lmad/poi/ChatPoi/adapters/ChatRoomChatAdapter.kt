@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.models.Chat
 import fcfm.lmad.poi.ChatPoi.models.ChatRoomMessage
 import kotlinx.android.synthetic.main.item_view_alert.view.*
 
@@ -20,8 +19,8 @@ class ChatRoomChatAdapter(
 
     inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentChatMessage: ChatRoomMessage) {
-            itemView.chat_message.text = currentChatMessage.message
-            itemView.chat_time.text = currentChatMessage.time
+            itemView.chat_room_file_name.text = currentChatMessage.message
+            itemView.chat_room_file_time.text = currentChatMessage.time
             //itemView.main_alert_image.text = currentAlert.image
             //itemView.setOnClickListener{ fragAdmin.launchActivity()}
         }

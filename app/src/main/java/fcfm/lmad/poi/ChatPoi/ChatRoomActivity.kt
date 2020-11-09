@@ -20,7 +20,11 @@ class ChatRoomActivity : AppCompatActivity(),IFragmentAdmin  {
         chatRoomOptionTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
 
-
+                when (tab?.position) {
+                    0 -> changeFragment(ChatRoomChatFragment(fragAdmin), "ChatRoomChatFragment")
+                    1 -> changeFragment(ChatRoomFilesFragment(fragAdmin), "ChatRoomFilesFragment")
+                    else -> changeFragment(ChatRoomChatFragment(fragAdmin), "ChatRoomChatFragment")
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
