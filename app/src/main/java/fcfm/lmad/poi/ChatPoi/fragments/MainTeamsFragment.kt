@@ -11,6 +11,7 @@ import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.viewModels.MainTeamsViewModel
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.CustomExpandableListAdapter
+import kotlinx.android.synthetic.main.main_tasks_fragment.view.*
 import kotlinx.android.synthetic.main.main_teams_fragment.view.*
 
 class MainTeamsFragment (
@@ -34,7 +35,7 @@ class MainTeamsFragment (
 
         val adapter = CustomExpandableListAdapter(ctx,headerList,itemList,fragAdmin)
         rootView.llMainTeamsContainer.setAdapter(adapter)
-
+        rootView.btnAddNewTeam.setOnClickListener {fragAdmin.launchActivity(7)}
         return rootView
     }
 

@@ -21,7 +21,7 @@ class TeamActivity: AppCompatActivity(),IFragmentAdmin  {
 
         val fragAdmin = this as IFragmentAdmin
         changeFragment(TeamRoomPostsFragment(fragAdmin), "TeamRoomPostsFragment")
-
+        btnAddNewTeamPost.setOnClickListener{launchActivity(5)}
         teamRoomOptionTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
 
@@ -51,6 +51,7 @@ class TeamActivity: AppCompatActivity(),IFragmentAdmin  {
         var intent : Intent = Intent(this,PostActivity::class.java)
         when(type){
             0 -> intent = Intent(this,PostActivity::class.java)
+            5 -> intent = Intent(this,NewPostActivity::class.java)
         }
 
         startActivity(intent)

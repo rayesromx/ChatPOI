@@ -9,6 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatPoi">
+        <activity android:name=".NewPostActivity"></activity>
+        <activity android:name=".NewTaskActivity" />
+        <activity
+            android:name=".NewSubTeamActivity"
+            android:label="@string/title_activity_new_sub_team"
+            android:theme="@style/Theme.ChatPoi.NoActionBar" />
+        <activity android:name=".NewChatActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".TeamActivity" />

@@ -18,8 +18,6 @@ class TeamRoomPostAdapter(
     val fragAdmin: IFragmentAdmin
 ) : RecyclerView.Adapter<TeamRoomPostAdapter.TeamRoomViewHolder>() {
 
-    private val MESSAGE_TYPE_LEFT = 0
-    private val MESSAGE_TYPE_RIGHT = 1
 
     inner class TeamRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentPost: TeamPost) {

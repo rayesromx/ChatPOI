@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
             1 -> intent = Intent(this,ChatRoomActivity::class.java) //descarga de archivo
             3 -> intent = Intent(this,TaskActivity::class.java)
             5 -> intent = Intent(this,TeamActivity::class.java)
+            6 -> intent = Intent(this,NewChatActivity::class.java)
+            7 -> intent = Intent(this,NewSubTeamActivity::class.java)
+            8 -> intent = Intent(this,NewTaskActivity::class.java)
+            9-> intent = Intent(this,NewPostActivity::class.java)
         }
 
         startActivity(intent)

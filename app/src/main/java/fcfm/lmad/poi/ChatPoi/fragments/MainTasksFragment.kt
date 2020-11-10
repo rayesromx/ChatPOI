@@ -14,6 +14,7 @@ import fcfm.lmad.poi.ChatPoi.adapters.MainTasksFragmentAdapter
 import fcfm.lmad.poi.ChatPoi.viewModels.MainAlertsViewModel
 import kotlinx.android.synthetic.main.main_alerts_fragment.view.*
 import kotlinx.android.synthetic.main.main_alerts_fragment.view.rvMainAlertFrag
+import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 import kotlinx.android.synthetic.main.main_tasks_fragment.view.*
 
 class MainTasksFragment(
@@ -31,6 +32,7 @@ class MainTasksFragment(
     ): View? {
         rootView = inflater.inflate(R.layout.main_tasks_fragment, container, false)
         initializeVM()
+        rootView.btnAddNewTask.setOnClickListener {fragAdmin.launchActivity(8)}
         return rootView
     }
 

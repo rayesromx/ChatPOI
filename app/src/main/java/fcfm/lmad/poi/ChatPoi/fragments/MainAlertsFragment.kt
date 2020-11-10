@@ -11,6 +11,7 @@ import fcfm.lmad.poi.ChatPoi.viewModels.MainAlertsViewModel
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.MainAlertsFragmentAdapter
 import kotlinx.android.synthetic.main.main_alerts_fragment.view.*
+import kotlinx.android.synthetic.main.main_tasks_fragment.view.*
 
 class MainAlertsFragment(
     var fragAdmin: IFragmentAdmin
@@ -27,6 +28,7 @@ class MainAlertsFragment(
     ): View? {
         rootView = inflater.inflate(R.layout.main_alerts_fragment, container, false)
         initializeVM()
+
         return rootView
     }
 

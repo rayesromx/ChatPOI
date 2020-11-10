@@ -14,6 +14,7 @@ import fcfm.lmad.poi.ChatPoi.adapters.TeamRoomPostAdapter
 import fcfm.lmad.poi.ChatPoi.viewModels.ChatRoomChatViewModel
 import fcfm.lmad.poi.ChatPoi.viewModels.MainChatsViewModel
 import fcfm.lmad.poi.ChatPoi.viewModels.TeamPostViewModel
+import kotlinx.android.synthetic.main.activity_team.view.*
 import kotlinx.android.synthetic.main.chat_room_chat_fragment.view.*
 import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 import kotlinx.android.synthetic.main.main_chats_fragment.view.rvMainChatFrag
