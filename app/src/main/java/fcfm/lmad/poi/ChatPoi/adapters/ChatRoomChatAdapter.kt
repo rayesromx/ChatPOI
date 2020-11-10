@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.models.ChatRoomMessage
+import kotlinx.android.synthetic.main.activity_chat_room.view.*
 import kotlinx.android.synthetic.main.item_view_alert.view.*
 import kotlinx.android.synthetic.main.item_view_alert.view.task_points
 import kotlinx.android.synthetic.main.item_view_chat_room_left.view.*
 
 class ChatRoomChatAdapter(
     private val chatRoomMessageList: List<ChatRoomMessage>,
-    val fragAdmin: IFragmentAdmin
+    val fragAdmin: IFragmentAdmin,
+    private var esGrupal: Boolean
 ) : RecyclerView.Adapter<ChatRoomChatAdapter.ChatRoomViewHolder>() {
 
     private val MESSAGE_TYPE_LEFT = 0
@@ -21,8 +23,13 @@ class ChatRoomChatAdapter(
 
     inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentChatMessage: ChatRoomMessage) {
+            itemView.item_view_chat_room_person.text = currentChatMessage.from
             itemView.item_view_chat_room_message.text = currentChatMessage.message
             itemView.item_view_chat_room_messge_time.text = currentChatMessage.time
+            if(!esGrupal) {
+                itemView.item_view_chat_room_person.visibility = View.GONE
+            }
+
             //itemView.main_alert_image.text = currentAlert.image
             //itemView.setOnClickListener{ fragAdmin.launchActivity()}
         }

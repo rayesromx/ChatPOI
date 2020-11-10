@@ -18,6 +18,8 @@ interface IFragmentAdmin{
 
 class MainActivity : AppCompatActivity(),IFragmentAdmin {
 
+    private var statusChatDemo: String = "0"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -63,6 +65,12 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
             8 -> intent = Intent(this,NewTaskActivity::class.java)
             9-> intent = Intent(this,NewPostActivity::class.java)
         }
+
+        intent.putExtra("dato",statusChatDemo)
+        if(statusChatDemo == "1")
+            statusChatDemo = "0"
+        else
+            statusChatDemo = "1"
 
         startActivity(intent)
     }

@@ -17,7 +17,8 @@ import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 import kotlinx.android.synthetic.main.main_chats_fragment.view.rvMainChatFrag
 
 class ChatRoomChatFragment(
-    var fragAdmin: IFragmentAdmin
+    var fragAdmin: IFragmentAdmin,
+    private var esGrupal: Boolean
 ) : Fragment() {
 
     private lateinit var rootView: View
@@ -43,8 +44,8 @@ class ChatRoomChatFragment(
         if (!this::viewModel.isInitialized)
         {
             viewModel = ViewModelProvider(this).get(ChatRoomChatViewModel::class.java)
-            viewModel.load()
-            adapter = ChatRoomChatAdapter(viewModel.modelList,fragAdmin)
+            viewModel.load(esGrupal)
+            adapter = ChatRoomChatAdapter(viewModel.modelList,fragAdmin,esGrupal)
             rootView.rvChatRoomChatFrag.adapter = adapter
         }
     }
