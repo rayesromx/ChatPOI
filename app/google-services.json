@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "990013445255",
+    "firebase_url": "https://chatlmad.firebaseio.com",
+    "project_id": "chatlmad",
+    "storage_bucket": "chatlmad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990013445255:android:c68d32876bc249e5165422",
+        "android_client_info": {
+          "package_name": "fcfm.lmad.poi.ChatPoi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990013445255-02qh206gh0lj2vqj22fn5i6432dnjaie.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeYF6M2yghwyGx4W6cvSGTVGaQu00OD6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990013445255-02qh206gh0lj2vqj22fn5i6432dnjaie.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
+import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.models.Task
 import kotlinx.android.synthetic.main.item_view_alert.view.*

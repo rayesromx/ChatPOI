@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fcfm.lmad.poi.ChatPoi">
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -16,13 +18,13 @@
             android:label="@string/title_activity_new_sub_team"
             android:theme="@style/Theme.ChatPoi.NoActionBar" />
         <activity android:name=".NewChatActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".presentation.register.view.RegisterActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".TeamActivity" />
         <activity android:name=".TaskActivity" />
         <activity android:name=".ChatRoomActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".presentation.main.view.MainActivity" />
+        <activity android:name=".presentation.login.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

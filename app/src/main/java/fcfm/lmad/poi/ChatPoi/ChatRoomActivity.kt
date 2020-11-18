@@ -7,9 +7,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import fcfm.lmad.poi.ChatPoi.fragments.*
+import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import kotlinx.android.synthetic.main.activity_chat_room.*
 
-class ChatRoomActivity : AppCompatActivity(),IFragmentAdmin  {
+class ChatRoomActivity : AppCompatActivity(), IFragmentAdmin {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_room)

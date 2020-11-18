@@ -1,8 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.viewModels
 
 import androidx.lifecycle.ViewModel
-import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
-import fcfm.lmad.poi.ChatPoi.adapters.MainAlertsFragmentAdapter
 import fcfm.lmad.poi.ChatPoi.models.Alert
 import fcfm.lmad.poi.ChatPoi.models.AlertType
 

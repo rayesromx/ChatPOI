@@ -1,19 +1,15 @@
 package fcfm.lmad.poi.ChatPoi
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import fcfm.lmad.poi.ChatPoi.adapters.NewChatPeopleListAdapter
-import fcfm.lmad.poi.ChatPoi.adapters.PostCommentsAdapter
 import fcfm.lmad.poi.ChatPoi.models.People
-import fcfm.lmad.poi.ChatPoi.models.TeamPost
+import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import kotlinx.android.synthetic.main.activity_new_chat.*
-import kotlinx.android.synthetic.main.activity_post.*
-import kotlinx.android.synthetic.main.activity_post.rvPost
 
-class NewChatActivity : AppCompatActivity(),IFragmentAdmin {
+class NewChatActivity : AppCompatActivity(), IFragmentAdmin {
 
     lateinit var adapter: NewChatPeopleListAdapter
     val modelList = mutableListOf<People>()

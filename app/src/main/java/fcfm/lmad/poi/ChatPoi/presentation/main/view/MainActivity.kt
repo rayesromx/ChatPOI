@@ -1,10 +1,11 @@
-package fcfm.lmad.poi.ChatPoi
+package fcfm.lmad.poi.ChatPoi.presentation.main.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
+import fcfm.lmad.poi.ChatPoi.*
 import fcfm.lmad.poi.ChatPoi.fragments.MainAlertsFragment
 import fcfm.lmad.poi.ChatPoi.fragments.MainChatsFragment
 import fcfm.lmad.poi.ChatPoi.fragments.MainTasksFragment
@@ -16,7 +17,7 @@ interface IFragmentAdmin{
     fun launchActivity(type: Int)
 }
 
-class MainActivity : AppCompatActivity(),IFragmentAdmin {
+class MainActivity : AppCompatActivity(), IFragmentAdmin {
 
     private var statusChatDemo: String = "0"
 
@@ -54,16 +55,16 @@ class MainActivity : AppCompatActivity(),IFragmentAdmin {
     }
 
     override fun launchActivity(type: Int){
-        var intent : Intent = Intent(this,ChatRoomActivity::class.java)
+        var intent : Intent = Intent(this, ChatRoomActivity::class.java)
         when(type){
-            0 -> intent = Intent(this,ChatRoomActivity::class.java)
-            1 -> intent = Intent(this,ChatRoomActivity::class.java) //descarga de archivo
-            3 -> intent = Intent(this,TaskActivity::class.java)
-            5 -> intent = Intent(this,TeamActivity::class.java)
-            6 -> intent = Intent(this,NewChatActivity::class.java)
-            7 -> intent = Intent(this,NewSubTeamActivity::class.java)
-            8 -> intent = Intent(this,NewTaskActivity::class.java)
-            9-> intent = Intent(this,NewPostActivity::class.java)
+            0 -> intent = Intent(this, ChatRoomActivity::class.java)
+            1 -> intent = Intent(this, ChatRoomActivity::class.java) //descarga de archivo
+            3 -> intent = Intent(this, TaskActivity::class.java)
+            5 -> intent = Intent(this, TeamActivity::class.java)
+            6 -> intent = Intent(this, NewChatActivity::class.java)
+            7 -> intent = Intent(this, NewSubTeamActivity::class.java)
+            8 -> intent = Intent(this, NewTaskActivity::class.java)
+            9-> intent = Intent(this, NewPostActivity::class.java)
         }
 
         intent.putExtra("dato",statusChatDemo)

@@ -1,13 +1,12 @@
 package fcfm.lmad.poi.ChatPoi.adapters
 
 import android.content.Context
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
-import fcfm.lmad.poi.ChatPoi.IFragmentAdmin
+import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
 import java.util.HashMap
 class CustomExpandableListAdapter internal constructor(

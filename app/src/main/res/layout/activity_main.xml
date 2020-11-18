@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.main.view.MainActivity">
 
     <FrameLayout
         android:id="@+id/frameContainer"
@@ -51,6 +51,8 @@
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_work_24"
             android:text="@string/lbl_work" />
+
+
     </com.google.android.material.tabs.TabLayout>
 
 

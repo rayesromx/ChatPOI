@@ -3,18 +3,14 @@ package fcfm.lmad.poi.ChatPoi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
-import fcfm.lmad.poi.ChatPoi.fragments.ChatRoomChatFragment
-import fcfm.lmad.poi.ChatPoi.fragments.ChatRoomFilesFragment
 import fcfm.lmad.poi.ChatPoi.fragments.TeamRoomFilesFragment
 import fcfm.lmad.poi.ChatPoi.fragments.TeamRoomPostsFragment
-import kotlinx.android.synthetic.main.activity_chat_room.*
-import kotlinx.android.synthetic.main.activity_chat_room.chatRoomOptionTabLayout
+import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import kotlinx.android.synthetic.main.activity_team.*
 
-class TeamActivity: AppCompatActivity(),IFragmentAdmin  {
+class TeamActivity: AppCompatActivity(), IFragmentAdmin {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team)
