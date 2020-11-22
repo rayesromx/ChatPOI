@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <!--com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,24 +32,28 @@
                     android:textSize="24dp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMainChatFrag"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_chat_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#EAEAEA"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_main_chat" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_main_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddNewTeamChat"
+        android:id="@+id/btn_add_new_chat"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="24dp"

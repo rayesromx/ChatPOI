@@ -1,49 +1,67 @@
 package fcfm.lmad.poi.ChatPoi.fragments
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
+import fcfm.lmad.poi.ChatPoi.BlankFragment
+import fcfm.lmad.poi.ChatPoi.BlankFragment2
+import fcfm.lmad.poi.ChatPoi.presentation.singleChat.view.ChatUserSearchFragment
 import fcfm.lmad.poi.ChatPoi.viewModels.MainChatsViewModel
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.MainChatsFragmentAdapter
+import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
 import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 
-class MainChatsFragment: Fragment() {
-
-    private lateinit var rootView: View
+class MainChatsFragment(
+    private val ctx: Context
+): BaseFragment(ctx) {
     lateinit var adapter: MainChatsFragmentAdapter
     private lateinit var viewModel: MainChatsViewModel
+
+    override fun getFragmentLayoutID() = R.layout.main_chats_fragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.main_chats_fragment, container, false)
-        initializeVM()
+        super.onCreateView(inflater,container, savedInstanceState)
 
-       // rootView.btnAddNewTeamChat.setOnClickListener {fragAdmin.launchActivity(6)}
-
+        rootView.view_pager_chat_container.adapter = ViewPager2Adapter(this,ctx!!)
+        TabLayoutMediator(rootView.tab_layout_main_chat, rootView.view_pager_chat_container) { tab, position ->
+            when(position){
+                0 -> {
+                    tab.text ="Chats"
+                    tab.setIcon(R.drawable.ic_forum_24px)
+                }
+                1 -> {
+                    tab.text = "Busqueda"
+                    tab.setIcon(R.drawable.ic_forum_24px)
+                }
+                2 -> {
+                    tab.text ="Configuracion"
+                    tab.setIcon(R.drawable.ic_people_black_18dp)
+                }
+            }
+            rootView.view_pager_chat_container.setCurrentItem(tab.position, true)
+        }.attach()
         return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initializeVM()
-    }
-
-    private fun initializeVM()
-    {
-        if (!this::viewModel.isInitialized)
-        {
-            viewModel = ViewModelProvider(this).get(MainChatsViewModel::class.java)
-            viewModel.load()
-            adapter = MainChatsFragmentAdapter(viewModel.modelList)
-            rootView.rvMainChatFrag.adapter = adapter
+    internal class ViewPager2Adapter(frag: Fragment,ctx:Context) : FragmentStateAdapter(frag){
+        private val fragments = ArrayList<Fragment>()
+        init {
+            fragments.add(BlankFragment())
+            fragments.add(ChatUserSearchFragment(ctx))
+            fragments.add(BlankFragment2())
         }
+        override fun getItemCount(): Int = fragments.size
+        override fun createFragment(position: Int): Fragment = fragments[position]
     }
 }

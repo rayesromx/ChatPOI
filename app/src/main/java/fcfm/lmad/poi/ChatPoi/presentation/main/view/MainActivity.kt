@@ -1,5 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.presentation.main.view
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,7 +30,6 @@ class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
 
     private var statusChatDemo: String = "0"
     lateinit var fragAdmin: IFragmentAdmin
-
     lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,7 +129,7 @@ class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
         private val fragments = ArrayList<Fragment>()
         init {
             fragments.add(MainAlertsFragment())
-            fragments.add(MainChatsFragment())
+            fragments.add(MainChatsFragment(activity))
             fragments.add(BlankFragment())
             fragments.add(BlankFragment2())
         }

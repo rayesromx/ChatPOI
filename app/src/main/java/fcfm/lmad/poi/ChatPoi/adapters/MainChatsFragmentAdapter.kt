@@ -26,7 +26,7 @@ class MainChatsFragmentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         return ChatViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_view_chat, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.user_search_item_view_layout, parent, false)
         )
     }
 
