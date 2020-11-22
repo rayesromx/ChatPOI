@@ -12,9 +12,7 @@ import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.MainChatsFragmentAdapter
 import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 
-class MainChatsFragment(
-    var fragAdmin: IFragmentAdmin
-) : Fragment() {
+class MainChatsFragment: Fragment() {
 
     private lateinit var rootView: View
     lateinit var adapter: MainChatsFragmentAdapter
@@ -28,7 +26,7 @@ class MainChatsFragment(
         rootView = inflater.inflate(R.layout.main_chats_fragment, container, false)
         initializeVM()
 
-        rootView.btnAddNewTeamChat.setOnClickListener {fragAdmin.launchActivity(6)}
+       // rootView.btnAddNewTeamChat.setOnClickListener {fragAdmin.launchActivity(6)}
 
         return rootView
     }
@@ -44,7 +42,7 @@ class MainChatsFragment(
         {
             viewModel = ViewModelProvider(this).get(MainChatsViewModel::class.java)
             viewModel.load()
-            adapter = MainChatsFragmentAdapter(viewModel.modelList,fragAdmin)
+            adapter = MainChatsFragmentAdapter(viewModel.modelList)
             rootView.rvMainChatFrag.adapter = adapter
         }
     }

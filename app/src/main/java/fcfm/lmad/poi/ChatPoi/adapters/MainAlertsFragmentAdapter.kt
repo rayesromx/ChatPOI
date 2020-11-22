@@ -10,8 +10,7 @@ import fcfm.lmad.poi.ChatPoi.models.Alert
 import kotlinx.android.synthetic.main.item_view_alert.view.*
 
 class MainAlertsFragmentAdapter(
-    private val alertList: List<Alert>,
-    val fragAdmin: IFragmentAdmin
+    private val alertList: List<Alert>
 ) :
     RecyclerView.Adapter<MainAlertsFragmentAdapter.AlertViewHolder>() {
 
@@ -34,9 +33,7 @@ class MainAlertsFragmentAdapter(
     }
 
     override fun onBindViewHolder(holder: AlertViewHolder, position: Int) {
-
         holder.bindData(alertList[position])
     }
-
     override fun getItemCount(): Int = alertList.size
 }

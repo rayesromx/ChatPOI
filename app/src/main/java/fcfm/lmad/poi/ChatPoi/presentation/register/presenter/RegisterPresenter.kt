@@ -24,9 +24,9 @@ class RegisterPresenter(
 
     override fun checkPasswordsMatch(pwd1: String, pwd2: String): Boolean = pwd1 == pwd2
 
-    override fun signUp(username: String, email: String, password: String) {
+    override fun signUp(username: String, email: String, password: String,carrera:String) {
         view?.showProgressBar()
-        registerInteractor?.signUp(username, email,password,object: IRegisterCallback{
+        registerInteractor?.signUp(username, email,password,carrera,object: IRegisterCallback{
             override fun onRegisterSucces() {
                 view?.navigateToMain()
                 view?.hideProgressBar()

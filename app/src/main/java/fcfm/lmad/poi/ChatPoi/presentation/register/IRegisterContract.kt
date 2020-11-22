@@ -12,6 +12,6 @@ interface IRegisterContract {
         fun checkEmptyField(field:String):Boolean
         fun checkValidEmail(email:String):Boolean
         fun checkPasswordsMatch(pwd1:String, pwd2:String):Boolean
-        fun signUp(username:String, email:String, password:String,)
+        fun signUp(username:String, email:String, password:String,carrera:String)
     }
 }

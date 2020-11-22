@@ -6,6 +6,7 @@ import android.view.View
 import com.fcfm.poi.plantilla.base.BaseActivity
 import com.fcfm.poi.plantilla.presentation.login.ILoginContract
 import fcfm.lmad.poi.ChatPoi.R
+import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.CheckLoggedInInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.register.view.RegisterActivity
 import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.SignInInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.login.presenter.LoginPresenter
@@ -18,8 +19,15 @@ class LoginActivity : BaseActivity(), ILoginContract.ILoginView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = LoginPresenter(SignInInteractor())
+        presenter = LoginPresenter(
+            SignInInteractor(),
+            CheckLoggedInInteractor()
+        )
         presenter.attachView(this)
+
+        if(presenter.isUserAlreadyLoggedIn())
+            navigateToMain()
+
         btnLogin.setOnClickListener {
             signIn()
         }
@@ -29,8 +37,6 @@ class LoginActivity : BaseActivity(), ILoginContract.ILoginView {
     }
 
     override fun getLayout(): Int = R.layout.activity_login
-
-
 
     override fun showProgressBar() {
         pbarLogin.visibility = View.VISIBLE

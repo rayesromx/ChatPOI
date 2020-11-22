@@ -6,4 +6,5 @@ interface ISignInInteractor {
         fun onSignInError(errorMsg:String)
     }
     fun signIn(email:String,password:String,listener:ISignInCallback)
+
 }

@@ -1,6 +1,7 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class SignInInteractor:ISignInInteractor {
     override fun signIn(
@@ -16,6 +17,5 @@ class SignInInteractor:ISignInInteractor {
                 else
                     listener.onSignInError(it.exception?.message!!)
             }
-
     }
 }

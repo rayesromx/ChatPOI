@@ -10,8 +10,7 @@ import fcfm.lmad.poi.ChatPoi.models.Chat
 import kotlinx.android.synthetic.main.item_view_chat.view.*
 
 class MainChatsFragmentAdapter(
-    private val chatList: List<Chat>,
-    val fragAdmin: IFragmentAdmin
+    private val chatList: List<Chat>
 ) :
     RecyclerView.Adapter<MainChatsFragmentAdapter.ChatViewHolder>() {
 
@@ -21,7 +20,7 @@ class MainChatsFragmentAdapter(
             itemView.main_chat_time.text = currentChat.time
             itemView.main_chat_message.text = currentChat.message
             //itemView.main_chat_image.text = currentAlert.image
-            itemView.setOnClickListener{ fragAdmin.launchActivity(0)}
+            //itemView.setOnClickListener{ fragAdmin.launchActivity(0)}
         }
     }
 

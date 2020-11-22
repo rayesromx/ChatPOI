@@ -12,9 +12,7 @@ import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.MainAlertsFragmentAdapter
 import kotlinx.android.synthetic.main.main_alerts_fragment.view.*
 
-class MainAlertsFragment(
-    var fragAdmin: IFragmentAdmin
-) : Fragment() {
+class MainAlertsFragment : Fragment() {
 
     private lateinit var rootView: View
     lateinit var adapter: MainAlertsFragmentAdapter
@@ -27,7 +25,6 @@ class MainAlertsFragment(
     ): View? {
         rootView = inflater.inflate(R.layout.main_alerts_fragment, container, false)
         initializeVM()
-
         return rootView
     }
 
@@ -42,7 +39,7 @@ class MainAlertsFragment(
         {
             viewModel = ViewModelProvider(this).get(MainAlertsViewModel::class.java)
             viewModel.load()
-            adapter = MainAlertsFragmentAdapter(viewModel.modelList,fragAdmin)
+            adapter = MainAlertsFragmentAdapter(viewModel.modelList)
             rootView.rvMainAlertFrag.adapter = adapter
         }
     }

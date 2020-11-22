@@ -1,10 +1,12 @@
 package fcfm.lmad.poi.ChatPoi.presentation.login.presenter
 
 import com.fcfm.poi.plantilla.presentation.login.ILoginContract
+import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.ICheckLoggedInInteractor
 import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.ISignInInteractor
 
 class LoginPresenter(
-    val signInInteractor: ISignInInteractor
+    val signInInteractor: ISignInInteractor,
+    val checkLoggedInInteractor: ICheckLoggedInInteractor
 ):ILoginContract.ILoginPresenter{
 
     var view:ILoginContract.ILoginView? = null
@@ -38,7 +40,8 @@ class LoginPresenter(
 
     }
 
-    override fun checkEmptyFields(email: String, password: String)
-            = email.isEmpty() || password.isEmpty()
+    override fun checkEmptyFields(email: String, password: String) = email.isEmpty() || password.isEmpty()
+
+    override fun isUserAlreadyLoggedIn(): Boolean = checkLoggedInInteractor.isUserAlreadyLoggedIn()
 
 }

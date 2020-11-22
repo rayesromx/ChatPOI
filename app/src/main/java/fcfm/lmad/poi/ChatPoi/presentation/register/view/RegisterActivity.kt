@@ -58,16 +58,12 @@ class RegisterActivity : BaseActivity(), IRegisterContract.IRegisterView {
             return
         }
 
-
-
         if(!presenter.checkPasswordsMatch(pwd1,pwd2)){
             etxt_password_confirmation.error = "Las contrasenas no coinciden"
             return
         }
 
-        presenter.signUp(username,email,pwd1)
-
-
+        presenter.signUp(username,email,pwd1,spin_carrera.selectedItem.toString())
 
     }
 

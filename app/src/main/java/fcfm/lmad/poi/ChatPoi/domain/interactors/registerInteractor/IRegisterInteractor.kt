@@ -5,5 +5,5 @@ interface IRegisterInteractor {
         fun onRegisterSucces()
         fun onRegisterFailure(errorMsg:String)
     }
-    fun signUp(userName:String, email:String, password:String, listener:IRegisterCallback)
+    fun signUp(userName:String, email:String, password:String, carrera:String,listener:IRegisterCallback)
 }

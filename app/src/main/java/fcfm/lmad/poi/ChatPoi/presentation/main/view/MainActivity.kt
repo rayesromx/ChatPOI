@@ -3,13 +3,21 @@ package fcfm.lmad.poi.ChatPoi.presentation.main.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayout
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.fcfm.poi.plantilla.base.BaseActivity
+import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.*
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
+import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.LogoutInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.userInteractor.OnUserLoggedInInteractor
 import fcfm.lmad.poi.ChatPoi.fragments.MainAlertsFragment
 import fcfm.lmad.poi.ChatPoi.fragments.MainChatsFragment
-import fcfm.lmad.poi.ChatPoi.fragments.MainTasksFragment
-import fcfm.lmad.poi.ChatPoi.fragments.MainTeamsFragment
+import fcfm.lmad.poi.ChatPoi.presentation.login.view.LoginActivity
+import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
+import fcfm.lmad.poi.ChatPoi.presentation.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
 interface IFragmentAdmin{
@@ -17,40 +25,63 @@ interface IFragmentAdmin{
     fun launchActivity(type: Int)
 }
 
-class MainActivity : AppCompatActivity(), IFragmentAdmin {
+class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
 
     private var statusChatDemo: String = "0"
+    lateinit var fragAdmin: IFragmentAdmin
+
+    lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        presenter = MainPresenter(
+            LogoutInteractor(),
+            OnUserLoggedInInteractor()
+        )
 
-        var ctx = this
-        val fragAdmin = this as IFragmentAdmin
-        changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> changeFragment(MainAlertsFragment(fragAdmin), "MainAlertsFragment")
-                    1 -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
-                    2 -> changeFragment(MainTeamsFragment(ctx,fragAdmin), "MainTeamsFragment")
-                    3 -> changeFragment(MainTasksFragment(fragAdmin), "MainTasksFragment")
-                    else -> changeFragment(MainChatsFragment(fragAdmin), "MainChatsFragment")
+        presenter.attachView(this)
+
+        view_pager_container.adapter =  ViewPager2Adapter(this)
+        TabLayoutMediator(tab_layout_main, view_pager_container) { tab, position ->
+            when(position){
+                0 -> {
+                    tab.text ="Alertas"
+                    tab.setIcon(R.drawable.ic_baseline_notifications_24)
+                }
+                1 -> {
+                    tab.text = "Chats"
+                    tab.setIcon(R.drawable.ic_forum_24px)
+                }
+                2 -> {
+                    tab.text ="Grupos"
+                    tab.setIcon(R.drawable.ic_people_black_18dp)
+                }
+                3 -> {
+                    tab.text ="Tareas"
+                    tab.setIcon(R.drawable.ic_baseline_work_24)
                 }
             }
+            view_pager_container.setCurrentItem(tab.position, true)
+        }.attach()
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
+        btn_main_logout.setOnClickListener{
+            logOut()
+        }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
+        presenter.refreshUserData()
     }
 
-     override fun changeFragment(fragment: Fragment, tag: String) {
+    override fun getLayout() = R.layout.activity_main
+
+    override fun refreshUserData(user: User?) {
+        txt_username.text = user!!.username
+        Picasso.get().load(user.profile_img).into(img_user_image)
+    }
+
+    override fun changeFragment(fragment: Fragment, tag: String) {
         val currentFragment = supportFragmentManager.findFragmentByTag(tag)
         if (currentFragment == null || currentFragment.isVisible.not()) {
-            supportFragmentManager.beginTransaction().replace(R.id.frameContainer, fragment, tag).commit()
+           // supportFragmentManager.beginTransaction().replace(R.id.frameContainer, fragment, tag).commit()
         }
     }
 
@@ -75,4 +106,41 @@ class MainActivity : AppCompatActivity(), IFragmentAdmin {
 
         startActivity(intent)
     }
+
+    override fun logOut() {
+        presenter.logOut()
+        var intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.detachView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
+    }
+
+    internal class ViewPager2Adapter(activity:AppCompatActivity) : FragmentStateAdapter(activity){
+
+        private val fragments = ArrayList<Fragment>()
+        init {
+            fragments.add(MainAlertsFragment())
+            fragments.add(MainChatsFragment())
+            fragments.add(BlankFragment())
+            fragments.add(BlankFragment2())
+        }
+
+
+        override fun getItemCount(): Int = fragments.size
+        override fun createFragment(position: Int): Fragment = fragments[position]
+        fun addFragment(fragment:Fragment){
+            fragments.add(fragment)
+        }
+    }
+
+
 }
