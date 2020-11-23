@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.adapters.ChatRoomChatAdapter
+import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.ChatRoomChatAdapter
 import fcfm.lmad.poi.ChatPoi.viewModels.ChatRoomChatViewModel
 import kotlinx.android.synthetic.main.chat_room_chat_fragment.view.*
 
@@ -41,7 +41,7 @@ class ChatRoomChatFragment(
         {
             viewModel = ViewModelProvider(this).get(ChatRoomChatViewModel::class.java)
             viewModel.load(esGrupal)
-            adapter = ChatRoomChatAdapter(viewModel.modelList,fragAdmin,esGrupal)
+           // adapter = ChatRoomChatAdapter(viewModel.modelList,fragAdmin,esGrupal)
             rootView.rvChatRoomChatFrag.adapter = adapter
         }
     }

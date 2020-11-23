@@ -1,17 +1,22 @@
-package fcfm.lmad.poi.ChatPoi.adapters
+package fcfm.lmad.poi.ChatPoi.presentation.chat.adapter
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
+import fcfm.lmad.poi.ChatPoi.domain.entities.Message
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.models.ChatRoomMessage
 import kotlinx.android.synthetic.main.item_view_chat_room_left.view.*
 
 class ChatRoomChatAdapter(
-    private val chatRoomMessageList: List<ChatRoomMessage>,
-    val fragAdmin: IFragmentAdmin,
+    private val chatRoomMessageList: List<Message>,
+    val currentUser: User,
     private var esGrupal: Boolean
 ) : RecyclerView.Adapter<ChatRoomChatAdapter.ChatRoomViewHolder>() {
 
@@ -19,12 +24,23 @@ class ChatRoomChatAdapter(
     private val MESSAGE_TYPE_RIGHT = 1
 
     inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindData(currentChatMessage: ChatRoomMessage) {
-            itemView.item_view_chat_room_person.text = currentChatMessage.from
-            itemView.item_view_chat_room_message.text = currentChatMessage.message
-            itemView.item_view_chat_room_messge_time.text = currentChatMessage.time
-            if(!esGrupal) {
-                itemView.item_view_chat_room_person.visibility = View.GONE
+        fun bindData(currentChatMessage: Message) {
+            itemView.item_view_chat_room_person.text = currentChatMessage.sender
+            itemView.item_view_chat_room_person.visibility = View.GONE
+            if(currentChatMessage.image_url.isNullOrBlank()) {
+                itemView.item_view_chat_room_message.text = currentChatMessage.message
+                itemView.item_view_chat_room_message.visibility = View.VISIBLE
+                itemView.item_view_chat_room_image.visibility = View.GONE
+            }
+            else {
+                Picasso.get().load(currentChatMessage.image_url)
+                    .into(itemView.item_view_chat_room_image)
+                itemView.item_view_chat_room_message.visibility = View.GONE
+                itemView.item_view_chat_room_image.visibility = View.VISIBLE
+            }
+            //itemView.item_view_chat_room_messge_seen.text = currentChatMessage.time
+            if(esGrupal) {
+                itemView.item_view_chat_room_person.visibility = View.VISIBLE
             }
 
             //itemView.main_alert_image.text = currentAlert.image
@@ -43,7 +59,7 @@ class ChatRoomChatAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(chatRoomMessageList[position].isMine ==  1)
+        if(chatRoomMessageList[position].sender == currentUser.uid)
             return MESSAGE_TYPE_RIGHT
         return MESSAGE_TYPE_LEFT
     }
