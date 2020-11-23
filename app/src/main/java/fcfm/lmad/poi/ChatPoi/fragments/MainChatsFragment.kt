@@ -15,6 +15,7 @@ import fcfm.lmad.poi.ChatPoi.viewModels.MainChatsViewModel
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.MainChatsFragmentAdapter
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
+import fcfm.lmad.poi.ChatPoi.presentation.shared.view.OnlyRecyclerFragment
 import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 
 class MainChatsFragment(
@@ -52,7 +53,7 @@ class MainChatsFragment(
     internal class ViewPager2Adapter(frag: Fragment,ctx:Context) : FragmentStateAdapter(frag){
         private val fragments = ArrayList<Fragment>()
         init {
-            fragments.add(BlankFragment())
+            fragments.add(OnlyRecyclerFragment(ctx))
             fragments.add(ChatUserSearchFragment(ctx))
         }
         override fun getItemCount(): Int = fragments.size

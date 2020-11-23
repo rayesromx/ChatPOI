@@ -7,3 +7,4 @@ interface IRetrieveChatConversationInteractor {
     interface IRetrieveChatConversationCallback:IBaseInteractorCallBack<List<Message>>{}
     fun getChatConversation(sender:String, receiver: String,listener:IRetrieveChatConversationCallback)
 }
+

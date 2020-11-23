@@ -1,5 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.presentation.chat
 import android.net.Uri
+import fcfm.lmad.poi.ChatPoi.domain.entities.ChatList
 import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
@@ -33,12 +34,14 @@ interface IChatContract {
             fun loadChatMessages(sender:String, receiver: String)
         }
     }
-    interface ISettingsFrag{
+
+    interface IChatListFrag{
         interface IView{
-
+            fun showError(errorMsg:String)
+            fun displayUsers(list:List<User>)
         }
-        interface IPresenter: IBasePresenter<ISearchFrag.IView>{
-
+        interface IPresenter: IBasePresenter<IView> {
+            fun getChatListOfUser()
         }
     }
 
