@@ -1,4 +1,5 @@
 package fcfm.lmad.poi.ChatPoi.presentation.chat
+import android.net.Uri
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
 
@@ -18,10 +19,14 @@ interface IChatContract {
         interface IView{
             fun showError(errorMsg:String)
             fun displayUserData(user:User)
+            fun sendMessage()
+            fun sendImage()
 
         }
         interface IPresenter: IBasePresenter<IChatRoom.IView>{
             fun retrieveUserData(partnerUserId:String)
+            fun sendMessage(message:String, receiver:String)
+            fun sendImage(filePath: Uri, receiver:String)
         }
     }
     interface ISettingsFrag{

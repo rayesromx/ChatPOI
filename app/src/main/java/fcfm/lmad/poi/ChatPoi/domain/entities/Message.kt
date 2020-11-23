@@ -1,10 +1,20 @@
 package fcfm.lmad.poi.ChatPoi.domain.entities
 
-data class Message (
-    val sender: String,
-    val receiver: String,
-    val message: String,
-    val id: String,
-    val image_url : String,
-    val is_seen: Boolean
-)
+ class Message {
+     var sender: String = ""
+     var receiver: String= ""
+     var message: String= ""
+     var id: String= ""
+     var image_url: String= ""
+     var is_seen: Boolean = false
+
+     fun getHastMap():HashMap<String,Any?>{
+         val messageHashMap = HashMap<String, Any?>()
+         messageHashMap["sender"] =  sender
+         messageHashMap["receiver"] = receiver
+         messageHashMap["message"] = message
+         messageHashMap["image_url"] = image_url
+         messageHashMap["is_seen"] = is_seen
+         return messageHashMap
+     }
+ }
