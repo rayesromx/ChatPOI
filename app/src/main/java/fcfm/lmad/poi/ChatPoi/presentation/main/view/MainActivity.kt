@@ -1,21 +1,20 @@
 package fcfm.lmad.poi.ChatPoi.presentation.main.view
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.fcfm.poi.plantilla.base.BaseActivity
+import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.*
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.LogoutInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.userInteractor.OnUserLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogoutInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.OnUserLoggedInInteractor
 import fcfm.lmad.poi.ChatPoi.fragments.MainAlertsFragment
 import fcfm.lmad.poi.ChatPoi.fragments.MainChatsFragment
+import fcfm.lmad.poi.ChatPoi.presentation.chat.view.ChatRoomActivity
 import fcfm.lmad.poi.ChatPoi.presentation.login.view.LoginActivity
 import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
 import fcfm.lmad.poi.ChatPoi.presentation.main.presenter.MainPresenter

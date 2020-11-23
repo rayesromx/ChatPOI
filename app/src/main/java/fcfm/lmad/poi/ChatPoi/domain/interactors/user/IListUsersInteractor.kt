@@ -1,4 +1,4 @@
-package fcfm.lmad.poi.ChatPoi.domain.interactors.userInteractor
+package fcfm.lmad.poi.ChatPoi.domain.interactors.user
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseInteractorCallBack
 

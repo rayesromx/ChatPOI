@@ -1,4 +1,4 @@
-package fcfm.lmad.poi.ChatPoi.domain.interactors.userInteractor
+package fcfm.lmad.poi.ChatPoi.domain.interactors.user
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

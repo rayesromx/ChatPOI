@@ -1,4 +1,4 @@
-package com.fcfm.poi.plantilla.base
+package fcfm.lmad.poi.ChatPoi.presentation.shared.view
 
 import android.content.Context
 import android.os.Bundle

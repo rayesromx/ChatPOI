@@ -1,8 +1,7 @@
-package fcfm.lmad.poi.ChatPoi.domain.interactors.registerInteractor
+package fcfm.lmad.poi.ChatPoi.domain.interactors.register
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class RegisterInteractor:IRegisterInteractor {

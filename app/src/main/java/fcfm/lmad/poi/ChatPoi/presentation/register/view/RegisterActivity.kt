@@ -3,9 +3,9 @@ package fcfm.lmad.poi.ChatPoi.presentation.register.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.fcfm.poi.plantilla.base.BaseActivity
+import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.domain.interactors.registerInteractor.RegisterInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.register.RegisterInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.MainActivity
 import fcfm.lmad.poi.ChatPoi.presentation.register.IRegisterContract
 import fcfm.lmad.poi.ChatPoi.presentation.register.presenter.RegisterPresenter

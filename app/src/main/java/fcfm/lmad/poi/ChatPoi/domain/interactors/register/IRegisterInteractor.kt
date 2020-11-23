@@ -1,4 +1,4 @@
-package fcfm.lmad.poi.ChatPoi.domain.interactors.registerInteractor
+package fcfm.lmad.poi.ChatPoi.domain.interactors.register
 
 interface IRegisterInteractor {
     interface IRegisterCallback{

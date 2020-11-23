@@ -1,9 +1,9 @@
 package fcfm.lmad.poi.ChatPoi.presentation.main.presenter
 
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.LogoutInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.userInteractor.IOnUserLoggedInInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.userInteractor.OnUserLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogoutInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.IOnUserLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.OnUserLoggedInInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
 
 class MainPresenter(

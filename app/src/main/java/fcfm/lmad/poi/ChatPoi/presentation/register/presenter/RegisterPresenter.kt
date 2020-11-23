@@ -1,9 +1,8 @@
 package fcfm.lmad.poi.ChatPoi.presentation.register.presenter
 
 import androidx.core.util.PatternsCompat
-import fcfm.lmad.poi.ChatPoi.domain.interactors.registerInteractor.IRegisterInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.registerInteractor.IRegisterInteractor.IRegisterCallback
-import fcfm.lmad.poi.ChatPoi.domain.interactors.registerInteractor.RegisterInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.register.IRegisterInteractor.IRegisterCallback
+import fcfm.lmad.poi.ChatPoi.domain.interactors.register.RegisterInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.register.IRegisterContract
 
 class RegisterPresenter(

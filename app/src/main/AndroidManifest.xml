@@ -22,7 +22,7 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".TeamActivity" />
         <activity android:name=".TaskActivity" />
-        <activity android:name=".ChatRoomActivity" />
+        <activity android:name=".presentation.chat.view.ChatRoomActivity" />
         <activity android:name=".presentation.main.view.MainActivity" />
         <activity android:name=".presentation.login.view.LoginActivity">
             <intent-filter>

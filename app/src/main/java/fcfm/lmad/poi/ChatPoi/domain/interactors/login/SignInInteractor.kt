@@ -1,7 +1,6 @@
-package fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor
+package fcfm.lmad.poi.ChatPoi.domain.interactors.login
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 
 class SignInInteractor:ISignInInteractor {
     override fun signIn(

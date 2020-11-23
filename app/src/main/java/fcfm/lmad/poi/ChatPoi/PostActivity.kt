@@ -38,7 +38,7 @@ class PostActivity : AppCompatActivity() , IFragmentAdmin {
     override fun changeFragment(fragment: Fragment, tag: String) {
         val currentFragment = supportFragmentManager.findFragmentByTag(tag)
         if (currentFragment == null || currentFragment.isVisible.not()) {
-            supportFragmentManager.beginTransaction().replace(R.id.chatRoomFrameContainer, fragment, tag).commit()
+            //supportFragmentManager.beginTransaction().replace(R.id.chatRoomFrameContainer, fragment, tag).commit()
         }
     }
 

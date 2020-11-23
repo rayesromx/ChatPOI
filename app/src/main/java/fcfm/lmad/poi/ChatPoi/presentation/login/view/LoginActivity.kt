@@ -3,12 +3,12 @@ package fcfm.lmad.poi.ChatPoi.presentation.login.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.fcfm.poi.plantilla.base.BaseActivity
+import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import com.fcfm.poi.plantilla.presentation.login.ILoginContract
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.CheckLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.CheckLoggedInInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.register.view.RegisterActivity
-import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.SignInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.SignInInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.login.presenter.LoginPresenter
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*

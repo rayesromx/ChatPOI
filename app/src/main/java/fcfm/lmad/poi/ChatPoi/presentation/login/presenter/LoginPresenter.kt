@@ -1,8 +1,8 @@
 package fcfm.lmad.poi.ChatPoi.presentation.login.presenter
 
 import com.fcfm.poi.plantilla.presentation.login.ILoginContract
-import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.ICheckLoggedInInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.loginInteractor.ISignInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ICheckLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ISignInInteractor
 
 class LoginPresenter(
     val signInInteractor: ISignInInteractor,

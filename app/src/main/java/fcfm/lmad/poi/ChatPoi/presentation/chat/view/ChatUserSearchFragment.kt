@@ -1,4 +1,4 @@
-package fcfm.lmad.poi.ChatPoi.presentation.singleChat.view
+package fcfm.lmad.poi.ChatPoi.presentation.chat.view
 
 import android.content.Context
 import android.os.Bundle
@@ -8,18 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.userInteractor.ListUsersInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListUsersInteractor
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
-import fcfm.lmad.poi.ChatPoi.presentation.singleChat.ISingleChatContract
-import fcfm.lmad.poi.ChatPoi.presentation.singleChat.adapter.UserAdapter
-import fcfm.lmad.poi.ChatPoi.presentation.singleChat.presenter.SearchFragPresenter
-import kotlinx.android.synthetic.main.fragment_chat_user_search.*
+import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
+import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
+import fcfm.lmad.poi.ChatPoi.presentation.chat.presenter.SearchFragPresenter
 import kotlinx.android.synthetic.main.fragment_chat_user_search.view.*
 
 
 class ChatUserSearchFragment(
     private val ctx: Context
-): BaseFragment(ctx), ISingleChatContract.ISearchFrag.IView {
+): BaseFragment(ctx), IChatContract.ISearchFrag.IView {
 
      private lateinit var adapter: UserAdapter
      private lateinit var presenter: SearchFragPresenter

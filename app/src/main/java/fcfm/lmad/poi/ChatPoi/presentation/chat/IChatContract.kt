@@ -1,8 +1,8 @@
-package fcfm.lmad.poi.ChatPoi.presentation.singleChat
+package fcfm.lmad.poi.ChatPoi.presentation.chat
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
 
-interface ISingleChatContract {
+interface IChatContract {
     interface ISearchFrag{
         interface IView{
             fun showError(errorMsg:String)
@@ -14,12 +14,14 @@ interface ISingleChatContract {
             fun searchUser(searchedUser:String)
         }
     }
-    interface IListFrag{
+    interface IChatRoom{
         interface IView{
+            fun showError(errorMsg:String)
+            fun displayUserData(user:User)
 
         }
-        interface IPresenter: IBasePresenter<ISearchFrag.IView>{
-
+        interface IPresenter: IBasePresenter<IChatRoom.IView>{
+            fun retrieveUserData(partnerUserId:String)
         }
     }
     interface ISettingsFrag{

@@ -1,7 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.fragments
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import fcfm.lmad.poi.ChatPoi.BlankFragment
 import fcfm.lmad.poi.ChatPoi.BlankFragment2
-import fcfm.lmad.poi.ChatPoi.presentation.singleChat.view.ChatUserSearchFragment
+import fcfm.lmad.poi.ChatPoi.presentation.chat.view.ChatUserSearchFragment
 import fcfm.lmad.poi.ChatPoi.viewModels.MainChatsViewModel
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.MainChatsFragmentAdapter
@@ -44,10 +43,6 @@ class MainChatsFragment(
                     tab.text = "Busqueda"
                     tab.setIcon(R.drawable.ic_forum_24px)
                 }
-                2 -> {
-                    tab.text ="Configuracion"
-                    tab.setIcon(R.drawable.ic_people_black_18dp)
-                }
             }
             rootView.view_pager_chat_container.setCurrentItem(tab.position, true)
         }.attach()
@@ -59,7 +54,6 @@ class MainChatsFragment(
         init {
             fragments.add(BlankFragment())
             fragments.add(ChatUserSearchFragment(ctx))
-            fragments.add(BlankFragment2())
         }
         override fun getItemCount(): Int = fragments.size
         override fun createFragment(position: Int): Fragment = fragments[position]
