@@ -6,7 +6,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
     android:layout_margin="8dp"
-tools:context=".NewSubTeamActivity">
+tools:context=".presentation.teams.view.NewSubTeamActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -34,6 +34,7 @@ tools:context=".NewSubTeamActivity">
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
+            android:id="@+id/txt_parent_team_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Grupo LMAD"
@@ -53,22 +54,17 @@ tools:context=".NewSubTeamActivity">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Grupo LMAD"
-            android:textSize="16dp" />
-
         <EditText
-            android:id="@+id/editGroupName"
+            android:id="@+id/etxt_sub_team_name"
+            android:hint="Ingresa el nombre del subgrupo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnAddNewGroup"
-        android:text="Agregar Grupo"
+        android:id="@+id/btn_add_new_sub_team"
+        android:text="Agregar grupo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

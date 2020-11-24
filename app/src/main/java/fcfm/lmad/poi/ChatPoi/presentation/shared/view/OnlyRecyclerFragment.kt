@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.RetrieveChatUserListInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.RetrieveChatUserList
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
 import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
 import fcfm.lmad.poi.ChatPoi.presentation.chat.presenter.ChatListPresenter
@@ -29,7 +30,7 @@ class OnlyRecyclerFragment(
         super.onCreateView(inflater, container, savedInstanceState)
 
         presenter = ChatListPresenter(
-            RetrieveChatUserListInteractor()
+            RetrieveChatUserList(ListAllUsers())
         )
         presenter.attachView(this)
         presenter.getChatListOfUser()

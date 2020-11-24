@@ -31,7 +31,7 @@ interface IChatContract {
             fun retrieveCurrentUserData()
             fun sendMessage(message:String, receiver:String)
             fun sendImage(filePath: Uri, receiver:String)
-            fun loadChatMessages(sender:String, receiver: String)
+            fun loadChatMessages(sender:String, reciever: String)
         }
     }
 

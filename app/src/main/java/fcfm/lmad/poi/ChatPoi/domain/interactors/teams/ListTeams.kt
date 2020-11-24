@@ -6,9 +6,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
+import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
 
-class RetreiveTeamsInteractor: IRetreiveTeamsInteractor {
-    override fun retreiveTeams(listener: IRetreiveTeamsInteractor.IRetreiveTeamsInteractorCallBack) {
+class ListTeams: IListTeamsUseCase {
+    override fun execute(listener: IBaseUseCaseCallBack<List<TeamContainer>>) {
         val teamRef = FirebaseDatabase.getInstance().reference.child("Teams")
         teamRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

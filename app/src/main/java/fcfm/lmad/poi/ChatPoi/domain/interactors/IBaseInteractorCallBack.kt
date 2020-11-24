@@ -1,6 +1,15 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors
 
-interface IBaseInteractorCallBack<T> {
-    fun onSuccess(data: T?)
-    fun onError(errorMessage:String)
+interface IBaseUseCaseCallBack<Response> {
+    fun onSuccess(data: Response?)
+    fun onError(error: String)
 }
+
+interface IBaseUseCaseWithInput<Request,Response> {
+    fun execute(input:Request,listener:IBaseUseCaseCallBack<Response>)
+}
+
+interface IBaseUseCase<Response> {
+    fun execute(listener:IBaseUseCaseCallBack<Response>)
+}
+

@@ -8,11 +8,14 @@ interface ILoginContract {
         fun signIn()
         fun navigateToMain()
         fun navigateToRegister()
+        fun setup()
+        fun refreshUserLogStatus(isLoggedIn:Boolean)
     }
 
     interface ILoginPresenter: IBasePresenter<ILoginContract.ILoginView> {
         fun signInUserWithEmailAndPassword(email:String, password:String)
         fun checkEmptyFields(email:String, password:String): Boolean
-        fun isUserAlreadyLoggedIn(): Boolean
+        fun refreshUserLogStatus()
+        fun setup()
     }
 }

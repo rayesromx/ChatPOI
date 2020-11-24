@@ -1,15 +1,14 @@
 package fcfm.lmad.poi.ChatPoi.presentation.teams
 
-import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
+import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
 
-interface IMainTeamsFragContract {
+interface INewSubTeamContract {
     interface IView{
         fun showError(errorMsg:String)
-        fun loadTeamList(teamList: List<TeamContainer>)
-        fun getTeamData()
+        fun loadTeamInformation(team: Team)
     }
     interface IPresenter: IBasePresenter<IView> {
-        fun loadTeamList()
+        fun loadTeamInformation(teamId:String)
     }
 }

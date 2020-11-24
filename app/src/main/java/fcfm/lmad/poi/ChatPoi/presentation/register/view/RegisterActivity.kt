@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.domain.interactors.register.RegisterInteractor
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
+import fcfm.lmad.poi.ChatPoi.domain.interactors.register.RegisterUser
+import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.AssociateUserWithTeam
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.MainActivity
 import fcfm.lmad.poi.ChatPoi.presentation.register.IRegisterContract
 import fcfm.lmad.poi.ChatPoi.presentation.register.presenter.RegisterPresenter
@@ -16,7 +18,10 @@ class RegisterActivity : BaseActivity(), IRegisterContract.IRegisterView {
     lateinit var presenter: IRegisterContract.IRegisterPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = RegisterPresenter(RegisterInteractor())
+        presenter = RegisterPresenter(
+            RegisterUser(),
+            AssociateUserWithTeam()
+        )
         presenter.attachView(this)
 
         btn_register.setOnClickListener{
@@ -27,16 +32,16 @@ class RegisterActivity : BaseActivity(), IRegisterContract.IRegisterView {
     override fun getLayout(): Int = R.layout.activity_register
 
     override fun navigateToMain() {
-        var intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
 
     override fun signUp() {
-        var username = etxt_user_name.text.toString().trim()
-        var email = etxt_email.text.toString().trim()
-        var pwd1 = etxt_password.text.toString().trim()
-        var pwd2 = etxt_password_confirmation.text.toString().trim()
+        val username = etxt_user_name.text.toString().trim()
+        val email = etxt_email.text.toString().trim()
+        val pwd1 = etxt_password.text.toString().trim()
+        val pwd2 = etxt_password_confirmation.text.toString().trim()
         var group = spin_carrera.selectedItem.toString()
 
         if(presenter.checkEmptyField(username)){
@@ -63,8 +68,12 @@ class RegisterActivity : BaseActivity(), IRegisterContract.IRegisterView {
             return
         }
 
-        presenter.signUp(username,email,pwd1,spin_carrera.selectedItem.toString())
+        val user = User()
+        user.username = username
+        user.email = email
+        user.group = group
 
+        presenter.signUp(user,pwd1)
     }
 
     override fun showProgressBar() {

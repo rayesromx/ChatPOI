@@ -20,7 +20,7 @@ abstract class BaseActivity : AppCompatActivity()
         Toast.makeText(context,message, duration).show()
     }
 
-    fun showError(msgError: String) {
-        toast(this,msgError)
+    fun showError(errorMsg: String) {
+        toast(this,errorMsg)
     }
 }

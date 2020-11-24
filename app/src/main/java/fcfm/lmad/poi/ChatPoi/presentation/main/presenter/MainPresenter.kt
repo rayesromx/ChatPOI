@@ -1,54 +1,36 @@
 package fcfm.lmad.poi.ChatPoi.presentation.main.presenter
 
-import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogoutInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.ITeamsSetupInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.user.IOnUserLoggedInInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.user.OnUserLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.GetLoggedUserData
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogOut
 import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
+import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 
 class MainPresenter(
-    var logoutInteractor: LogoutInteractor,
-    var onUserLoggedInInteractor: OnUserLoggedInInteractor,
-    var teamsSetupInteractor: ITeamsSetupInteractor
-):IMainContract.IMainPresenter {
-
-    var view: IMainContract.IMainView? = null
+        var logOut: LogOut,
+        var getLoggedUserData: GetLoggedUserData
+): BasePresenter<IMainContract.IMainView>(), IMainContract.IMainPresenter {
 
     override fun logOut() {
-        logoutInteractor.logOut()
-    }
-
-    override fun refreshUserData() {
-        onUserLoggedInInteractor.refreshUserData(
-            object : IOnUserLoggedInInteractor.IOnUserLoggedInCallback {
-                override fun onLoggedInSuccess(user: User?) {
-                    view!!.refreshUserData(user)
-                }
-                override fun onLoggedInError(errorMsg: String) {
-                    view!!.showError(errorMsg)
-                }
-            })
-    }
-
-    override fun setup() {
-        teamsSetupInteractor.setupTeams(object:ITeamsSetupInteractor.ITeamsSetupInteractorCallBack{
-            override fun onSuccess(data: List<Team>?) {
+        logOut.execute(object: IBaseUseCaseCallBack<Boolean>{
+            override fun onSuccess(data: Boolean?) {
+                view!!.logOut()
             }
-
-            override fun onError(errorMessage: String) {
-                view?.showError(errorMessage)
+            override fun onError(error: String) {
+                view!!.showError(error)
             }
-
         })
     }
 
-    override fun attachView(view: IMainContract.IMainView) {
-        this.view = view
+    override fun refreshUserData() {
+        getLoggedUserData.execute(object: IBaseUseCaseCallBack<User> {
+            override fun onSuccess(data: User?) {
+                view!!.refreshUserData(data)
+            }
+            override fun onError(error: String) {
+                view!!.showError(error)
+            }
+        })
     }
-    override fun detachView() {
-        view = null
-    }
-    override fun isViewAttached(): Boolean = view != null
 }

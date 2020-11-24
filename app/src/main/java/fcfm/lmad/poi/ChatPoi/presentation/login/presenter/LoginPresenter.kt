@@ -1,47 +1,66 @@
 package fcfm.lmad.poi.ChatPoi.presentation.login.presenter
 
 import com.fcfm.poi.plantilla.presentation.login.ILoginContract
-import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ICheckLoggedInInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ISignInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.dto.LoginData
+import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
+import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ICheckLoggedInUseCase
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ILogInUseCase
+import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.ISetupDefaultTeamsUseCase
+import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 
 class LoginPresenter(
-    val signInInteractor: ISignInInteractor,
-    val checkLoggedInInteractor: ICheckLoggedInInteractor
-):ILoginContract.ILoginPresenter{
+        private val logIn: ILogInUseCase,
+        private val checkLoggedIn: ICheckLoggedInUseCase,
+        private var setupDefaultTeams: ISetupDefaultTeamsUseCase
+): BasePresenter<ILoginContract.ILoginView>(), ILoginContract.ILoginPresenter{
 
-    var view:ILoginContract.ILoginView? = null
-
-    override fun attachView(loginView: ILoginContract.ILoginView) {
-        this.view = loginView
-    }
-    override fun detachView() {
-        view = null
-    }
     override fun isViewAttached(): Boolean = view != null
 
     override fun signInUserWithEmailAndPassword(email: String, password: String) {
         view?.showProgressBar()
-        signInInteractor.signIn(email,password,object: ISignInInteractor.ISignInCallback{
-            override fun onSignInSuccess() {
+        val loginData = LoginData(email,password)
+        logIn.execute(loginData,object: IBaseUseCaseCallBack<Boolean> {
+            override fun onSuccess(data: Boolean?) {
                 if(isViewAttached()){
                     view?.hideProgressBar()
-                    view?.navigateToMain()
+                    if(data!!)
+                        view?.navigateToMain()
+                    else
+                        view?.showError("Error al tratar de ingresar")
                 }
             }
 
-            override fun onSignInError(errorMsg: String) {
+            override fun onError(error: String) {
                 if(isViewAttached()){
                     view?.hideProgressBar()
-                    view?.showError(errorMsg)
+                    view?.showError(error)
                 }
             }
-
         } )
-
     }
 
     override fun checkEmptyFields(email: String, password: String) = email.isEmpty() || password.isEmpty()
 
-    override fun isUserAlreadyLoggedIn(): Boolean = checkLoggedInInteractor.isUserAlreadyLoggedIn()
+    override fun refreshUserLogStatus() {
+        checkLoggedIn.execute(object:IBaseUseCaseCallBack<Boolean>{
+            override fun onSuccess(data: Boolean?) {
+                view!!.refreshUserLogStatus(data!!)
+            }
+            override fun onError(error: String) {
+                view!!.showError(error)
+            }
+        })
+    }
 
+    override fun setup() {
+        setupDefaultTeams.execute(object:IBaseUseCaseCallBack<List<TeamContainer>>{
+            override fun onSuccess(data: List<TeamContainer>?) {
+            }
+
+            override fun onError(error: String) {
+                view?.showError(error)
+            }
+        })
+    }
 }

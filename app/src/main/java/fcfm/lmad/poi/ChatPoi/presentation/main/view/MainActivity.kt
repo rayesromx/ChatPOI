@@ -10,12 +10,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.*
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogoutInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.TeamsSetupInteractor
-import fcfm.lmad.poi.ChatPoi.domain.interactors.user.OnUserLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.GetLoggedUserData
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogOut
 import fcfm.lmad.poi.ChatPoi.fragments.MainAlertsFragment
 import fcfm.lmad.poi.ChatPoi.fragments.MainChatsFragment
-import fcfm.lmad.poi.ChatPoi.presentation.chat.view.ChatRoomActivity
 import fcfm.lmad.poi.ChatPoi.presentation.login.view.LoginActivity
 import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
 import fcfm.lmad.poi.ChatPoi.presentation.main.presenter.MainPresenter
@@ -29,15 +27,13 @@ interface IFragmentAdmin{
 
 class MainActivity : BaseActivity(), IMainContract.IMainView {
 
-    lateinit var fragAdmin: IFragmentAdmin
     lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = MainPresenter(
-            LogoutInteractor(),
-            OnUserLoggedInInteractor(),
-            TeamsSetupInteractor()
+            LogOut(),
+            GetLoggedUserData()
         )
 
         presenter.attachView(this)
@@ -68,9 +64,7 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
         btn_main_logout.setOnClickListener{
             logOut()
         }
-
         presenter.refreshUserData()
-        setup()
     }
 
     override fun getLayout() = R.layout.activity_main
@@ -78,10 +72,6 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
     override fun refreshUserData(user: User?) {
         txt_username.text = user!!.username
         Picasso.get().load(user.profile_img).into(img_user_image)
-    }
-
-    override fun setup() {
-        presenter.setup()
     }
 
     override fun logOut() {

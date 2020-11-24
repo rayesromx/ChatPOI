@@ -1,32 +1,35 @@
 package fcfm.lmad.poi.ChatPoi.presentation.chat.presenter
 
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.user.IListUsersInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.IListAllUsersUseCase
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ISearchUserByUsernameUseCase
 import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
 
 class SearchFragPresenter(
-    private val listUsersInteractor: IListUsersInteractor
+    private val listUsers: IListAllUsersUseCase,
+    private val searchUserByUsername: ISearchUserByUsernameUseCase
 ): BasePresenter<IChatContract.ISearchFrag.IView>(), IChatContract.ISearchFrag.IPresenter{
 
     override fun retrieveAllUsers() {
-        listUsersInteractor.retrieveAllUsers(object: IListUsersInteractor.IListUsersCallback {
+        listUsers.execute(object: IBaseUseCaseCallBack<List<User>> {
             override fun onSuccess(data: List<User>?) {
                 view?.displayUserList(data!!)
             }
-            override fun onError(errorMessage: String) {
-                view?.showError(errorMessage)
+            override fun onError(error: String) {
+                view?.showError(error)
             }
         })
     }
 
     override fun searchUser(searchedUser: String) {
-        listUsersInteractor.searchUser(searchedUser,object: IListUsersInteractor.IListUsersCallback {
+        searchUserByUsername.execute(searchedUser,object:IBaseUseCaseCallBack< List<User>> {
             override fun onSuccess(data: List<User>?) {
                 view?.displayUserList(data!!)
             }
-            override fun onError(errorMessage: String) {
-                view?.showError(errorMessage)
+            override fun onError(error: String) {
+                view?.showError(error)
             }
         })
     }

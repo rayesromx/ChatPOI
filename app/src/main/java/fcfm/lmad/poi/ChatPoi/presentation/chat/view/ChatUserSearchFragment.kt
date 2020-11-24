@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListUsersInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.SearchUserByUsername
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
 import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
@@ -29,7 +30,8 @@ class ChatUserSearchFragment(
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         presenter = SearchFragPresenter(
-            ListUsersInteractor()
+            ListAllUsers(),
+            SearchUserByUsername()
         )
         presenter.attachView(this)
         presenter.retrieveAllUsers()

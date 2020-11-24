@@ -1,20 +1,18 @@
 package fcfm.lmad.poi.ChatPoi.presentation.register.presenter
 
 import androidx.core.util.PatternsCompat
-import fcfm.lmad.poi.ChatPoi.domain.interactors.register.IRegisterInteractor.IRegisterCallback
-import fcfm.lmad.poi.ChatPoi.domain.interactors.register.RegisterInteractor
+import fcfm.lmad.poi.ChatPoi.domain.dto.RegisterData
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
+import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.domain.interactors.register.IRegisterUserUseCase
+import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.IAssociateUserWithTeamUseCase
 import fcfm.lmad.poi.ChatPoi.presentation.register.IRegisterContract
+import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 
 class RegisterPresenter(
-    registerInteractor: RegisterInteractor
-):IRegisterContract.IRegisterPresenter {
-
-    var view:IRegisterContract.IRegisterView? = null
-    var registerInteractor:RegisterInteractor? = null
-
-    init {
-        this.registerInteractor = registerInteractor
-    }
+        private val registerUser: IRegisterUserUseCase,
+        private val associateUserWithTeam: IAssociateUserWithTeamUseCase
+): BasePresenter<IRegisterContract.IRegisterView>(), IRegisterContract.IRegisterPresenter {
 
     override fun checkEmptyField(field: String): Boolean = field.isEmpty()
 
@@ -23,29 +21,19 @@ class RegisterPresenter(
 
     override fun checkPasswordsMatch(pwd1: String, pwd2: String): Boolean = pwd1 == pwd2
 
-    override fun signUp(username: String, email: String, password: String,carrera:String) {
+    override fun signUp(user: User, password:String){
         view?.showProgressBar()
-        registerInteractor?.signUp(username, email,password,carrera,object: IRegisterCallback{
-            override fun onRegisterSucces() {
+        var registerData = RegisterData(user,password)
+        registerUser.execute(registerData,object: IBaseUseCaseCallBack<Boolean> {
+            override fun onSuccess(data: Boolean?) {
                 view?.navigateToMain()
                 view?.hideProgressBar()
             }
 
-            override fun onRegisterFailure(errorMsg: String) {
-                view?.showError(errorMsg)
+            override fun onError(error: String) {
+                view?.showError(error)
                 view?.hideProgressBar()
             }
-
         })
     }
-
-    override fun attachView(view: IRegisterContract.IRegisterView) {
-        this.view = view
-    }
-
-    override fun detachView() {
-        view = null
-    }
-
-    override fun isViewAttached(): Boolean = view != null
 }

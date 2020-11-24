@@ -2,13 +2,15 @@ package fcfm.lmad.poi.ChatPoi.presentation.login.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.VoicemailContract
 import android.view.View
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import com.fcfm.poi.plantilla.presentation.login.ILoginContract
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.domain.interactors.login.CheckLoggedInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.CheckLoggedIn
 import fcfm.lmad.poi.ChatPoi.presentation.register.view.RegisterActivity
-import fcfm.lmad.poi.ChatPoi.domain.interactors.login.SignInInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogIn
+import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.SetupDefaultTeams
 import fcfm.lmad.poi.ChatPoi.presentation.login.presenter.LoginPresenter
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -20,13 +22,13 @@ class LoginActivity : BaseActivity(), ILoginContract.ILoginView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = LoginPresenter(
-            SignInInteractor(),
-            CheckLoggedInInteractor()
+            LogIn(),
+            CheckLoggedIn(),
+            SetupDefaultTeams()
         )
         presenter.attachView(this)
 
-        if(presenter.isUserAlreadyLoggedIn())
-            navigateToMain()
+        presenter.refreshUserLogStatus()
 
         btnLogin.setOnClickListener {
             signIn()
@@ -34,9 +36,19 @@ class LoginActivity : BaseActivity(), ILoginContract.ILoginView {
         btnSignup.setOnClickListener {
             navigateToRegister()
         }
+        setup()
     }
 
     override fun getLayout(): Int = R.layout.activity_login
+
+    override fun setup() {
+        presenter.setup()
+    }
+
+    override fun refreshUserLogStatus(isLoggedIn: Boolean) {
+        if(isLoggedIn)
+            navigateToMain()
+    }
 
     override fun showProgressBar() {
         pbarLogin.visibility = View.VISIBLE
