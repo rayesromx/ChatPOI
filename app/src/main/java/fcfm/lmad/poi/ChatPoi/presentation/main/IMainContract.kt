@@ -8,10 +8,12 @@ interface IMainContract {
         fun logOut()
         fun refreshUserData(user:User?)
         fun showError(errorMsg:String)
+        fun setup()
     }
 
     interface IMainPresenter: IBasePresenter<IMainView>{
         fun logOut()
         fun refreshUserData()
+        fun setup()
     }
 }

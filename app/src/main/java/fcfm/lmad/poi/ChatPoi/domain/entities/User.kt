@@ -24,4 +24,15 @@ class User {
         this.uid = uid
         this.username = username
     }
+
+    fun getHastMap():HashMap<String,Any?>{
+        val messageHashMap = HashMap<String, Any?>()
+        messageHashMap["group"] =  group
+        messageHashMap["profile_img"] = profile_img
+        messageHashMap["search"] = search
+        messageHashMap["status"] = status
+        messageHashMap["uid"] = uid
+        messageHashMap["username"] = username
+        return messageHashMap
+    }
 }

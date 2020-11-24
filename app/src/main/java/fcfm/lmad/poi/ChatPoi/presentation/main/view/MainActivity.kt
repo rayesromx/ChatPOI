@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.*
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogoutInteractor
+import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.TeamsSetupInteractor
 import fcfm.lmad.poi.ChatPoi.domain.interactors.user.OnUserLoggedInInteractor
 import fcfm.lmad.poi.ChatPoi.fragments.MainAlertsFragment
 import fcfm.lmad.poi.ChatPoi.fragments.MainChatsFragment
@@ -18,6 +19,7 @@ import fcfm.lmad.poi.ChatPoi.presentation.chat.view.ChatRoomActivity
 import fcfm.lmad.poi.ChatPoi.presentation.login.view.LoginActivity
 import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
 import fcfm.lmad.poi.ChatPoi.presentation.main.presenter.MainPresenter
+import fcfm.lmad.poi.ChatPoi.presentation.teams.view.MainTeamsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 interface IFragmentAdmin{
@@ -25,9 +27,8 @@ interface IFragmentAdmin{
     fun launchActivity(type: Int)
 }
 
-class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
+class MainActivity : BaseActivity(), IMainContract.IMainView {
 
-    private var statusChatDemo: String = "0"
     lateinit var fragAdmin: IFragmentAdmin
     lateinit var presenter: MainPresenter
 
@@ -35,7 +36,8 @@ class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
         super.onCreate(savedInstanceState)
         presenter = MainPresenter(
             LogoutInteractor(),
-            OnUserLoggedInInteractor()
+            OnUserLoggedInInteractor(),
+            TeamsSetupInteractor()
         )
 
         presenter.attachView(this)
@@ -68,6 +70,7 @@ class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
         }
 
         presenter.refreshUserData()
+        setup()
     }
 
     override fun getLayout() = R.layout.activity_main
@@ -77,33 +80,8 @@ class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
         Picasso.get().load(user.profile_img).into(img_user_image)
     }
 
-    override fun changeFragment(fragment: Fragment, tag: String) {
-        val currentFragment = supportFragmentManager.findFragmentByTag(tag)
-        if (currentFragment == null || currentFragment.isVisible.not()) {
-           // supportFragmentManager.beginTransaction().replace(R.id.frameContainer, fragment, tag).commit()
-        }
-    }
-
-    override fun launchActivity(type: Int){
-        var intent : Intent = Intent(this, ChatRoomActivity::class.java)
-        when(type){
-            0 -> intent = Intent(this, ChatRoomActivity::class.java)
-            1 -> intent = Intent(this, ChatRoomActivity::class.java) //descarga de archivo
-            3 -> intent = Intent(this, TaskActivity::class.java)
-            5 -> intent = Intent(this, TeamActivity::class.java)
-            6 -> intent = Intent(this, NewChatActivity::class.java)
-            7 -> intent = Intent(this, NewSubTeamActivity::class.java)
-            8 -> intent = Intent(this, NewTaskActivity::class.java)
-            9-> intent = Intent(this, NewPostActivity::class.java)
-        }
-
-        intent.putExtra("dato",statusChatDemo)
-        if(statusChatDemo == "1")
-            statusChatDemo = "0"
-        else
-            statusChatDemo = "1"
-
-        startActivity(intent)
+    override fun setup() {
+        presenter.setup()
     }
 
     override fun logOut() {
@@ -113,33 +91,24 @@ class MainActivity : BaseActivity(), IMainContract.IMainView,IFragmentAdmin {
         startActivity(intent)
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        presenter.detachView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.detachView()
-    }
-
     internal class ViewPager2Adapter(activity:AppCompatActivity) : FragmentStateAdapter(activity){
-
         private val fragments = ArrayList<Fragment>()
         init {
             fragments.add(MainAlertsFragment())
             fragments.add(MainChatsFragment(activity))
-            fragments.add(BlankFragment())
+            fragments.add(MainTeamsFragment(activity))
             fragments.add(BlankFragment2())
         }
-
-
         override fun getItemCount(): Int = fragments.size
         override fun createFragment(position: Int): Fragment = fragments[position]
-        fun addFragment(fragment:Fragment){
-            fragments.add(fragment)
-        }
     }
 
-
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        presenter.detachView()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
+    }
 }
