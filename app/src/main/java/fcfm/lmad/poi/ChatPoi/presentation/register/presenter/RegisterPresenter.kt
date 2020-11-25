@@ -12,7 +12,7 @@ import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 class RegisterPresenter(
         private val registerUser: IRegisterUserUseCase,
         private val associateUserWithTeam: IAssociateUserWithTeamUseCase
-): BasePresenter<IRegisterContract.IRegisterView>(), IRegisterContract.IRegisterPresenter {
+): BasePresenter<IRegisterContract.IView>(), IRegisterContract.IPresenter {
 
     override fun checkEmptyField(field: String): Boolean = field.isEmpty()
 

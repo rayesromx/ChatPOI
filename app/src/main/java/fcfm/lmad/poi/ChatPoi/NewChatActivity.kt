@@ -1,50 +1,42 @@
 package fcfm.lmad.poi.ChatPoi
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import fcfm.lmad.poi.ChatPoi.adapters.NewChatPeopleListAdapter
-import fcfm.lmad.poi.ChatPoi.models.People
-import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
+import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.NewChatSelectableListAdapter
+import fcfm.lmad.poi.ChatPoi.domain.dto.SelectableUser
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
+import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.RetrieveChatUserList
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
+import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
+import fcfm.lmad.poi.ChatPoi.presentation.chat.presenter.NewChatPresenter
+import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_new_chat.*
 
-class NewChatActivity : AppCompatActivity(), IFragmentAdmin {
+class NewChatActivity : BaseActivity(), IChatContract.INewChatList.IView {
 
-    lateinit var adapter: NewChatPeopleListAdapter
-    val modelList = mutableListOf<People>()
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var presenter: NewChatPresenter
+    private lateinit var selectableUsers: ArrayList<SelectableUser>
+    lateinit var adapter: NewChatSelectableListAdapter
+
+    override fun getLayout() = R.layout.activity_new_chat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_chat)
 
-        for(i in 1..4) {
-            modelList.add(People("Jorge campos", "xxx@gmail.com", ""))
-            modelList.add(People("Luis Ramos", "xxx@gmail.com", ""))
-            modelList.add(People("Rafael Rosas", "xxx@gmail.com", ""))
-            modelList.add(People("Julian Morales", "xxx@gmail.com", ""))
-            modelList.add(People("Juan Martinez", "xxx@gmail.com", ""))
-            modelList.add(People("Angelica Garcia", "xxx@gmail.com", ""))
-            modelList.add(People("Karla Garcia", "xxx@gmail.com", ""))
-            modelList.add(People("Ruben Roman", "xxx@gmail.com", ""))
-            modelList.add(People("Raul Ramon Ramirez", "xxx@gmail.com", ""))
-        }
-        linearLayoutManager = LinearLayoutManager(this)
-        rvPeopleToChat.layoutManager = linearLayoutManager
-
-        adapter = NewChatPeopleListAdapter(modelList,this)
-        rvPeopleToChat.adapter = adapter
+        presenter = NewChatPresenter(
+            ListAllUsers()
+        )
+        presenter.attachView(this)
+        presenter.getListOfChats()
     }
 
-    override fun changeFragment(fragment: Fragment, tag: String) {
-        val currentFragment = supportFragmentManager.findFragmentByTag(tag)
-        if (currentFragment == null || currentFragment.isVisible.not()) {
-            supportFragmentManager.beginTransaction().replace(R.id.teamRoomFrameContainer, fragment, tag).commit()
+    override fun displayUsers(list: List<User>) {
+        selectableUsers = ArrayList()
+        for(user in list){
+            selectableUsers.add(SelectableUser(user,false))
         }
-    }
-
-    override fun launchActivity(type: Int){
-
+        adapter = NewChatSelectableListAdapter(this,selectableUsers)
+        rv_selectable_user_list.layoutManager = LinearLayoutManager(this)
+        rv_selectable_user_list.adapter = adapter
     }
 }

@@ -1,10 +1,10 @@
 package com.fcfm.poi.plantilla.presentation.login
 
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
-import fcfm.lmad.poi.ChatPoi.presentation.shared.IBaseView
+import fcfm.lmad.poi.ChatPoi.presentation.shared.IBaseViewWithProgress
 
 interface ILoginContract {
-    interface ILoginView: IBaseView {
+    interface IView: IBaseViewWithProgress {
         fun signIn()
         fun navigateToMain()
         fun navigateToRegister()
@@ -12,7 +12,7 @@ interface ILoginContract {
         fun refreshUserLogStatus(isLoggedIn:Boolean)
     }
 
-    interface ILoginPresenter: IBasePresenter<ILoginContract.ILoginView> {
+    interface IPresenter: IBasePresenter<ILoginContract.IView> {
         fun signInUserWithEmailAndPassword(email:String, password:String)
         fun checkEmptyFields(email:String, password:String): Boolean
         fun refreshUserLogStatus()

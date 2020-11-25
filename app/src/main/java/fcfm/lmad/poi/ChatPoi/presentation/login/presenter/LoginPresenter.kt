@@ -13,7 +13,7 @@ class LoginPresenter(
         private val logIn: ILogInUseCase,
         private val checkLoggedIn: ICheckLoggedInUseCase,
         private var setupDefaultTeams: ISetupDefaultTeamsUseCase
-): BasePresenter<ILoginContract.ILoginView>(), ILoginContract.ILoginPresenter{
+): BasePresenter<ILoginContract.IView>(), ILoginContract.IPresenter{
 
     override fun isViewAttached(): Boolean = view != null
 

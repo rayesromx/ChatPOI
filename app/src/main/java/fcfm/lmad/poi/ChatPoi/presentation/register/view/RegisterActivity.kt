@@ -13,9 +13,9 @@ import fcfm.lmad.poi.ChatPoi.presentation.register.IRegisterContract
 import fcfm.lmad.poi.ChatPoi.presentation.register.presenter.RegisterPresenter
 import kotlinx.android.synthetic.main.activity_register.*
 
-class RegisterActivity : BaseActivity(), IRegisterContract.IRegisterView {
+class RegisterActivity : BaseActivity(), IRegisterContract.IView {
 
-    lateinit var presenter: IRegisterContract.IRegisterPresenter
+    lateinit var presenter: IRegisterContract.IPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = RegisterPresenter(

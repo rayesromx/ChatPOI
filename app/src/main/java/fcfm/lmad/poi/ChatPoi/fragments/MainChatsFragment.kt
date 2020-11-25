@@ -1,29 +1,29 @@
 package fcfm.lmad.poi.ChatPoi.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
-import fcfm.lmad.poi.ChatPoi.BlankFragment
-import fcfm.lmad.poi.ChatPoi.BlankFragment2
-import fcfm.lmad.poi.ChatPoi.presentation.chat.view.ChatUserSearchFragment
-import fcfm.lmad.poi.ChatPoi.viewModels.MainChatsViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import fcfm.lmad.poi.ChatPoi.NewChatActivity
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.adapters.MainChatsFragmentAdapter
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
+import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.RetrieveChatUserList
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
+import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
+import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
+import fcfm.lmad.poi.ChatPoi.presentation.chat.presenter.ChatListPresenter
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
-import fcfm.lmad.poi.ChatPoi.presentation.shared.view.OnlyRecyclerFragment
 import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 
 class MainChatsFragment(
     private val ctx: Context
-): BaseFragment(ctx) {
-    lateinit var adapter: MainChatsFragmentAdapter
-    private lateinit var viewModel: MainChatsViewModel
+): BaseFragment(ctx), IChatContract.IChatListFrag.IView {
 
+    lateinit var presenter: ChatListPresenter
+    lateinit var adapter: UserAdapter
     override fun getFragmentLayoutID() = R.layout.main_chats_fragment
 
     override fun onCreateView(
@@ -33,30 +33,31 @@ class MainChatsFragment(
     ): View? {
         super.onCreateView(inflater,container, savedInstanceState)
 
-        rootView.view_pager_chat_container.adapter = ViewPager2Adapter(this,ctx!!)
-        TabLayoutMediator(rootView.tab_layout_main_chat, rootView.view_pager_chat_container) { tab, position ->
-            when(position){
-                0 -> {
-                    tab.text ="Chats"
-                    tab.setIcon(R.drawable.ic_forum_24px)
-                }
-                1 -> {
-                    tab.text = "Busqueda"
-                    tab.setIcon(R.drawable.ic_forum_24px)
-                }
-            }
-            rootView.view_pager_chat_container.setCurrentItem(tab.position, true)
-        }.attach()
+        presenter = ChatListPresenter(
+            RetrieveChatUserList(ListAllUsers())
+        )
+        presenter.attachView(this)
+        presenter.getListOfChats()
+        rootView.btn_add_new_chat.setOnClickListener{
+            navigateToNewChat()
+        }
+
         return rootView
     }
 
-    internal class ViewPager2Adapter(frag: Fragment,ctx:Context) : FragmentStateAdapter(frag){
-        private val fragments = ArrayList<Fragment>()
-        init {
-            fragments.add(OnlyRecyclerFragment(ctx))
-            fragments.add(ChatUserSearchFragment(ctx))
-        }
-        override fun getItemCount(): Int = fragments.size
-        override fun createFragment(position: Int): Fragment = fragments[position]
+    override fun displayUsers(list: List<User>) {
+        if(list.isEmpty())
+            rootView.txt_no_data.visibility = View.VISIBLE
+        else
+            rootView.txt_no_data.visibility = View.GONE
+
+        adapter = UserAdapter(list,false)
+        rootView.rv_main_chat_frag.layoutManager = LinearLayoutManager(ctx)
+        rootView.rv_main_chat_frag.adapter = adapter
+    }
+
+    override fun navigateToNewChat() {
+        val intent = Intent(ctx, NewChatActivity::class.java)
+        ctx.startActivity(intent)
     }
 }

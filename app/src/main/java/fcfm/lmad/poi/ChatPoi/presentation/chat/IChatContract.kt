@@ -4,11 +4,11 @@ import fcfm.lmad.poi.ChatPoi.domain.entities.ChatList
 import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
+import fcfm.lmad.poi.ChatPoi.presentation.shared.IBaseView
 
 interface IChatContract {
     interface ISearchFrag{
-        interface IView{
-            fun showError(errorMsg:String)
+        interface IView : IBaseView {
             fun displayUserList(userList:List<User>)
             fun searchUser(searchedUsername:String)
         }
@@ -18,8 +18,7 @@ interface IChatContract {
         }
     }
     interface IChatRoom{
-        interface IView{
-            fun showError(errorMsg:String)
+        interface IView : IBaseView {
             fun displayUserData(user:User)
             fun displayCurrentUserData(user:User)
             fun sendMessage()
@@ -36,12 +35,22 @@ interface IChatContract {
     }
 
     interface IChatListFrag{
-        interface IView{
-            fun showError(errorMsg:String)
+        interface IView : IBaseView {
+            fun displayUsers(list:List<User>)
+            fun navigateToNewChat()
+
+        }
+        interface IPresenter: IBasePresenter<IView> {
+            fun getListOfChats()
+        }
+    }
+
+    interface INewChatList{
+        interface IView : IBaseView {
             fun displayUsers(list:List<User>)
         }
         interface IPresenter: IBasePresenter<IView> {
-            fun getChatListOfUser()
+            fun getListOfChats()
         }
     }
 

@@ -13,9 +13,9 @@ import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
 import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
 import fcfm.lmad.poi.ChatPoi.presentation.chat.presenter.ChatListPresenter
-import kotlinx.android.synthetic.main.fragment_only_recycler.view.*
+import kotlinx.android.synthetic.main.main_chats_fragment.view.*
 
-
+/*
 class OnlyRecyclerFragment(
     private val ctx: Context
 ): BaseFragment(ctx), IChatContract.IChatListFrag.IView {
@@ -33,7 +33,7 @@ class OnlyRecyclerFragment(
             RetrieveChatUserList(ListAllUsers())
         )
         presenter.attachView(this)
-        presenter.getChatListOfUser()
+        presenter.getListOfChats()
         return rootView
     }
 
@@ -41,7 +41,7 @@ class OnlyRecyclerFragment(
 
     override fun displayUsers(list: List<User>) {
         adapter = UserAdapter(list,false)
-        rootView.rv_onlyRv.layoutManager = LinearLayoutManager(ctx)
-        rootView.rv_onlyRv.adapter = adapter
+        rootView.rv_main_chat_frag.layoutManager = LinearLayoutManager(ctx)
+        rootView.rv_main_chat_frag.adapter = adapter
     }
-}
+}*/

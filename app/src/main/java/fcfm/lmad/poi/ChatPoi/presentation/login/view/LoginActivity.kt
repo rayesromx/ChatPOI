@@ -15,7 +15,7 @@ import fcfm.lmad.poi.ChatPoi.presentation.login.presenter.LoginPresenter
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BaseActivity(), ILoginContract.ILoginView {
+class LoginActivity : BaseActivity(), ILoginContract.IView {
 
     lateinit var presenter: LoginPresenter
 
