@@ -11,11 +11,11 @@ abstract class FireBaseRepository<T>(
 
     abstract fun getValue(item:DataSnapshot): T?
     fun canModelBeRetrieved(model: T) : Boolean = true
-    private fun getTableRef() = dbReference.child(fireBaseTableName)
+    protected fun getTableRef() = dbReference.child(fireBaseTableName)
     protected final fun getFirsTableChild(id:String) = getTableRef().child(id)
 
     override fun getAll(listener: IRepository.IRepositoryListener<List<T>>) {
-        getTableRef().addValueEventListener(object : ValueEventListener {
+        getTableRef().addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val models = ArrayList<T>()
                 for (model in snapshot.children){
@@ -31,7 +31,7 @@ abstract class FireBaseRepository<T>(
     }
 
     override fun getById(id:String, listener: IRepository.IRepositoryListener<T>) {
-        getFirsTableChild(id).addValueEventListener(object : ValueEventListener {
+        getFirsTableChild(id).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val model = getValue(snapshot)
                 listener.onSuccess(model!!)
@@ -47,7 +47,7 @@ abstract class FireBaseRepository<T>(
     }
 
     protected fun getByCustomParam(dbRef:DatabaseReference, paramKey: String, paramValue: String, listener: IRepository.IRepositoryListener<List<T>>) {
-        dbRef.orderByChild(paramKey).equalTo(paramValue).addValueEventListener(object : ValueEventListener {
+        dbRef.orderByChild(paramKey).equalTo(paramValue).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val models = ArrayList<T>()
                 if(snapshot.exists()){
@@ -66,17 +66,23 @@ abstract class FireBaseRepository<T>(
     }
 
     override fun save(model: T, listener: IRepository.IRepositoryListener<String>) {
-        if(model.uid.isBlank()){
-            val key = dbReference.push().key!!
-            model.uid = key
-        }
-        getFirsTableChild(model.uid)
-                .setValue(model.getHastMap())
-                .addOnCompleteListener {
-                    if (it.isSuccessful)
-                        listener.onSuccess(model.uid)
-                    else
-                        listener.onError(it.exception?.message!!)
-                }
+        if(model.uid.isBlank())
+            model.uid = dbReference.push().key!!
+
+        saveData( getFirsTableChild(model.uid),model,listener)
+    }
+
+    protected fun save(dbRef: DatabaseReference, model: T, listener: IRepository.IRepositoryListener<String>) {
+        saveData(dbRef,model,listener)
+    }
+
+    private fun saveData(dbRef: DatabaseReference, model: T, listener: IRepository.IRepositoryListener<String>) {
+        dbRef.setValue(model.getHastMap())
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    listener.onSuccess(model.uid)
+                else
+                    listener.onError(it.exception?.message!!)
+            }
     }
 }

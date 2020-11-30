@@ -1,6 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors.teams
 
-import com.google.firebase.database.*
+import fcfm.lmad.poi.ChatPoi.domain.IRepository
 import fcfm.lmad.poi.ChatPoi.domain.IRepository.IRepositoryListener
 import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
@@ -8,26 +8,14 @@ import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
 import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.FireBaseRepository
 
 class SetupDefaultTeams(
-        private val repository: FireBaseRepository<Team>
+    private val repository: FireBaseRepository<Team>
 ): ISetupDefaultTeamsUseCase {
     override fun execute(listener: IBaseUseCaseCallBack<List<TeamContainer>>) {
-        val dbReference = FirebaseDatabase.getInstance().reference
-        val defaultTeams = getTeamsList()
-        val fireBaseTeams = ArrayList<Team>()
-
-        repository.getAll(object: IRepositoryListener<List<Team>>{
-            override fun onSuccess(data: List<Team>) {
-                fireBaseTeams.addAll(data)
-                for (dteam in defaultTeams){
-                    var exists = false
-                    for(fteam in fireBaseTeams){
-                        if(dteam.name == fteam.name){
-                            exists = true
-                            break
-                        }
-                    }
-                    if(!exists){
-                        repository.save(dteam,object: IRepositoryListener<String>{
+        for (team in getTeamsList()){
+            repository.getByCustomParam("name",team.name,object: IRepositoryListener<List<Team>>{
+                override fun onSuccess(data: List<Team>) {
+                    if(data.isEmpty()){
+                        repository.save(team,object: IRepositoryListener<String>{
                             override fun onSuccess(data: String) {
                                 val subTeam = Team("General")
                                 subTeam.parent = data
@@ -40,17 +28,19 @@ class SetupDefaultTeams(
                                     }
                                 })
                             }
+
                             override fun onError(error: String) {
                                 listener.onError(error)
                             }
                         })
                     }
                 }
-            }
-            override fun onError(error: String) {
-                listener.onError(error)
-            }
-        })
+
+                override fun onError(error: String) {
+                    listener.onError(error)
+                }
+            })
+        }
     }
 
 

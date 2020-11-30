@@ -6,6 +6,9 @@ import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 
 class TeamRepository: FireBaseRepository<Team>("Teams") {
     override fun getValue(item: DataSnapshot) = item.getValue(Team::class.java)
+
+    private fun getSecondTableChild(model:Team) =getTableRef().child(model.parent).child(model.uid)
+
     override fun save(model: Team, listener: IRepository.IRepositoryListener<String>) {
         if(model.parent.isBlank())
             super.save(model, listener)
@@ -13,13 +16,10 @@ class TeamRepository: FireBaseRepository<Team>("Teams") {
             getByCustomParam(getFirsTableChild(model.parent),"name",model.name,object:IRepository.IRepositoryListener<List<Team>>{
                 override fun onSuccess(data: List<Team>) {
                     if(data.isEmpty()){
-                        model.uid = dbReference.push().key!!
-                        getFirsTableChild(model.parent)
-                            .child(model.uid).setValue(model.getHastMap())
-                            .addOnCompleteListener {
-                                if (!it.isSuccessful)
-                                    listener.onError(it.exception?.message!!)
-                            }
+                        if(model.uid.isBlank())
+                            model.uid = dbReference.push().key!!
+
+                        save(getSecondTableChild(model),model,listener)
                     }
                 }
 
