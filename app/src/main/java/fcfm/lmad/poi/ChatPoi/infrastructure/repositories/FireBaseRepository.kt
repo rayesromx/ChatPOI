@@ -43,7 +43,11 @@ abstract class FireBaseRepository<T>(
     }
 
     override fun getByCustomParam(paramKey: String, paramValue: String, listener: IRepository.IRepositoryListener<List<T>>) {
-        getTableRef().orderByChild(paramKey).equalTo(paramValue).addValueEventListener(object : ValueEventListener {
+        getByCustomParam(getTableRef(),paramKey,paramValue,listener)
+    }
+
+    protected fun getByCustomParam(dbRef:DatabaseReference, paramKey: String, paramValue: String, listener: IRepository.IRepositoryListener<List<T>>) {
+        dbRef.orderByChild(paramKey).equalTo(paramValue).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val models = ArrayList<T>()
                 if(snapshot.exists()){

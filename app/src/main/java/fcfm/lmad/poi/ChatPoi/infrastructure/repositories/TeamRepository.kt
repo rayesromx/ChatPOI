@@ -10,14 +10,23 @@ class TeamRepository: FireBaseRepository<Team>("Teams") {
         if(model.parent.isBlank())
             super.save(model, listener)
         else{
-            model.uid = dbReference.push().key!!
-            getFirsTableChild(model.parent)
-                    .child(model.uid).setValue(model.getHastMap())
-                    .addOnCompleteListener {
-                        if (!it.isSuccessful)
-                            listener.onError(it.exception?.message!!)
+            getByCustomParam(getFirsTableChild(model.parent),"name",model.name,object:IRepository.IRepositoryListener<List<Team>>{
+                override fun onSuccess(data: List<Team>) {
+                    if(data.isEmpty()){
+                        model.uid = dbReference.push().key!!
+                        getFirsTableChild(model.parent)
+                            .child(model.uid).setValue(model.getHastMap())
+                            .addOnCompleteListener {
+                                if (!it.isSuccessful)
+                                    listener.onError(it.exception?.message!!)
+                            }
                     }
+                }
+
+                override fun onError(error: String) {
+                    listener.onError(error)
+                }
+            })
         }
     }
-
 }
