@@ -1,53 +1,58 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors.teams
 
 import com.google.firebase.database.*
+import fcfm.lmad.poi.ChatPoi.domain.IRepository.IRepositoryListener
 import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
-import fcfm.lmad.poi.ChatPoi.domain.entities.TeamUser
-import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCase
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.FireBaseRepository
 
-class SetupDefaultTeams: ISetupDefaultTeamsUseCase {
+class SetupDefaultTeams(
+        private val repository: FireBaseRepository<Team>
+): ISetupDefaultTeamsUseCase {
     override fun execute(listener: IBaseUseCaseCallBack<List<TeamContainer>>) {
         val dbReference = FirebaseDatabase.getInstance().reference
-        val teams = getTeamsList()
+        val defaultTeams = getTeamsList()
+        val fireBaseTeams = ArrayList<Team>()
 
-        for(team in teams) {
-            dbReference.child("Teams").orderByChild("name").equalTo(team.name).addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(!snapshot.exists()){
-                        val key = dbReference.push().key!!
-                        team.id = key
-                        dbReference.child("Teams").child(key).setValue(team.getHastMap())
-                            .addOnCompleteListener {
-                                if (!it.isSuccessful)
-                                    listener.onError(it.exception?.message!!)
-                                else{
-                                    var subTeam = Team("General")
-                                    subTeam.parent = team.id
-                                    createSubTeam(subTeam,listener)
-                                }
+        repository.getAll(object: IRepositoryListener<List<Team>>{
+            override fun onSuccess(data: List<Team>) {
+                fireBaseTeams.addAll(data)
+                for (dteam in defaultTeams){
+                    var exists = false
+                    for(fteam in fireBaseTeams){
+                        if(dteam.name == fteam.name){
+                            exists = true
+                            break
+                        }
+                    }
+                    if(!exists){
+                        repository.save(dteam,object: IRepositoryListener<String>{
+                            override fun onSuccess(data: String) {
+                                val subTeam = Team("General")
+                                subTeam.parent = data
+                                repository.save(subTeam,object:IRepositoryListener<String>{
+                                    override fun onSuccess(data: String) {
+                                    }
+
+                                    override fun onError(error: String) {
+                                        listener.onError(error)
+                                    }
+                                })
                             }
+                            override fun onError(error: String) {
+                                listener.onError(error)
+                            }
+                        })
                     }
                 }
-                override fun onCancelled(error: DatabaseError) {
-                    listener.onError(error.message)
-                }
-            })
-        }
+            }
+            override fun onError(error: String) {
+                listener.onError(error)
+            }
+        })
     }
 
-    private fun createSubTeam(team:Team ,listener: IBaseUseCaseCallBack<List<TeamContainer>>) {
-        val dbReference = FirebaseDatabase.getInstance().reference
-        val key = dbReference.push().key!!
-        team.id = key
-        dbReference.child("Teams").child(team.parent)
-                .child(key).setValue(team.getHastMap())
-                .addOnCompleteListener {
-                    if (!it.isSuccessful)
-                        listener.onError(it.exception?.message!!)
-                }
-    }
 
     private fun getTeamsList():List<Team>{
         val teams = ArrayList<Team>()

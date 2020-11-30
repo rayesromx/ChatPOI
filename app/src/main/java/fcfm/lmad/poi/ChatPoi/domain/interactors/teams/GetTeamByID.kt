@@ -15,7 +15,7 @@ class GetTeamByID: IGetTeamByIdUseCase {
                 var team = Team()
                 for (item in snapshot.children) {
                     val steam = item.getValue(Team::class.java)
-                    if(steam?.id == input){
+                    if(steam?.uid == input){
                         team = steam
                     }
                 }

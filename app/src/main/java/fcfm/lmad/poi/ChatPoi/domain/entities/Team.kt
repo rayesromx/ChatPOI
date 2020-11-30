@@ -1,14 +1,16 @@
 package fcfm.lmad.poi.ChatPoi.domain.entities
 
-class Team {
-    var id:String = ""
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+
+class Team: BaseEntity {
     var name:String = ""
     var group:String = ""
     var parent:String = ""
 
-    fun getHastMap():HashMap<String,Any?>{
+    override fun getHastMap():HashMap<String,Any?>{
         val messageHashMap = HashMap<String, Any?>()
-        messageHashMap["id"] =  id
+        messageHashMap["id"] =  uid
         messageHashMap["name"] = name
         messageHashMap["group"] = group
         messageHashMap["parent"] = parent

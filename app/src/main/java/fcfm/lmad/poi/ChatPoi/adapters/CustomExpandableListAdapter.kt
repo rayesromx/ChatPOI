@@ -42,7 +42,7 @@ class CustomExpandableListAdapter internal constructor(
 
         convertView.setOnClickListener{
             val intent = Intent(context,TeamActivity::class.java)
-            intent.putExtra("team_id",team.id)
+            intent.putExtra("team_id",team.uid)
             intent.putExtra("team_name",team.name)
             context.startActivity(intent)
         }

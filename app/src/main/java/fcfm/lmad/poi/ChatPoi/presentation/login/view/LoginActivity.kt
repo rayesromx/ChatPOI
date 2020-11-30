@@ -11,6 +11,7 @@ import fcfm.lmad.poi.ChatPoi.domain.interactors.login.CheckLoggedIn
 import fcfm.lmad.poi.ChatPoi.presentation.register.view.RegisterActivity
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogIn
 import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.SetupDefaultTeams
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.TeamRepository
 import fcfm.lmad.poi.ChatPoi.presentation.login.presenter.LoginPresenter
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -24,7 +25,9 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
         presenter = LoginPresenter(
             LogIn(),
             CheckLoggedIn(),
-            SetupDefaultTeams()
+            SetupDefaultTeams(
+                TeamRepository()
+            )
         )
         presenter.attachView(this)
 
