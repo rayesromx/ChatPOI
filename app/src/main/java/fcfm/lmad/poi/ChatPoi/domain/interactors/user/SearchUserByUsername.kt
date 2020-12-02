@@ -5,29 +5,29 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import fcfm.lmad.poi.ChatPoi.domain.IRepository
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.FireBaseRepository
 
-class SearchUserByUsername:ISearchUserByUsernameUseCase {
+class SearchUserByUsername(
+        private val repository: FireBaseRepository<User>
+) :ISearchUserByUsernameUseCase {
     override fun execute(input: String, listener: IBaseUseCaseCallBack<List<User>>) {
         val firebaseUser = FirebaseAuth.getInstance().currentUser!!.uid
-        val queryUsers = FirebaseDatabase.getInstance().reference.child("Users")
-                .orderByChild("search")//.startAt(username).endAt(username + "\uf8ff")
-
-        queryUsers.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        repository.getByCustomParam("search",input,object: IRepository.IRepositoryListener<List<User>>{
+            override fun onSuccess(data: List<User>) {
                 val users = ArrayList<User>()
-                for(item in snapshot.children)
+                for(user in data)
                 {
-                    val user = item.getValue(User::class.java)
-                    if(user!!.uid != firebaseUser && user.search.contains(input) )
+                    if(user.uid != firebaseUser && user.search.contains(input) )
                         users.add(user)
                 }
                 listener.onSuccess(users)
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                listener.onError(error.message)
+            override fun onError(error: String) {
+                listener.onError(error)
             }
         })
     }

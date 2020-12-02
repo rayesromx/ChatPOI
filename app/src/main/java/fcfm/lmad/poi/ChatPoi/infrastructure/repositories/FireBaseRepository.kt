@@ -15,12 +15,12 @@ abstract class FireBaseRepository<T>(
     protected final fun getFirsTableChild(id:String) = getTableRef().child(id)
 
     override fun getAll(listener: IRepository.IRepositoryListener<List<T>>) {
-        getTableRef().addListenerForSingleValueEvent(object : ValueEventListener {
+        getTableRef().addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val models = ArrayList<T>()
                 for (model in snapshot.children){
                     val m = getValue(model)!!
-                    models.add(m)
+                        models.add(m)
                 }
                 listener.onSuccess(models)
             }
@@ -30,11 +30,16 @@ abstract class FireBaseRepository<T>(
         })
     }
 
-    override fun getById(id:String, listener: IRepository.IRepositoryListener<T>) {
-        getFirsTableChild(id).addListenerForSingleValueEvent(object : ValueEventListener {
+    override fun getById(id:String, listener: IRepository.IRepositoryListener<T?>) {
+        getFirsTableChild(id).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val model = getValue(snapshot)
-                listener.onSuccess(model!!)
+                if(snapshot.exists()) {
+                    val model = getValue(snapshot)
+                    listener.onSuccess(model!!)
+                }
+                else{
+                    listener.onSuccess(null)
+                }
             }
             override fun onCancelled(error: DatabaseError) {
                 listener.onError(error.message)
@@ -47,7 +52,7 @@ abstract class FireBaseRepository<T>(
     }
 
     protected fun getByCustomParam(dbRef:DatabaseReference, paramKey: String, paramValue: String, listener: IRepository.IRepositoryListener<List<T>>) {
-        dbRef.orderByChild(paramKey).equalTo(paramValue).addListenerForSingleValueEvent(object : ValueEventListener {
+        dbRef.orderByChild(paramKey).equalTo(paramValue).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val models = ArrayList<T>()
                 if(snapshot.exists()){
@@ -76,7 +81,7 @@ abstract class FireBaseRepository<T>(
         saveData(dbRef,model,listener)
     }
 
-    private fun saveData(dbRef: DatabaseReference, model: T, listener: IRepository.IRepositoryListener<String>) {
+    protected fun saveData(dbRef: DatabaseReference, model: T, listener: IRepository.IRepositoryListener<String>) {
         dbRef.setValue(model.getHastMap())
             .addOnCompleteListener {
                 if (it.isSuccessful)

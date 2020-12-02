@@ -15,12 +15,12 @@ import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
 class SendImage: ISendImageUseCase {
     override fun execute(input: ImageMsg, listener: IBaseUseCaseCallBack<Message>) {
         val reference = FirebaseDatabase.getInstance().reference
-        input.message.id = reference.push().key!!
+        input.message.uid = reference.push().key!!
         input.message.sender=  FirebaseAuth.getInstance().currentUser!!.uid
 
         val storageReference = FirebaseStorage.getInstance().reference.child("ChatImages")
         val dbReference = FirebaseDatabase.getInstance().reference
-        val filePath = storageReference.child(input.message.id+".jpg")
+        val filePath = storageReference.child(input.message.uid+".jpg")
 
         val uploadTask: StorageTask<*>
         uploadTask = filePath.putFile(input.filePath)
@@ -38,7 +38,7 @@ class SendImage: ISendImageUseCase {
                 input.message.message = "Envio una imagen"
                 input.message.image_url = url
 
-                dbReference.child("Chats").child(input.message.id).setValue(input.message.getHastMap())
+                dbReference.child("Chats").child(input.message.uid).setValue(input.message.getHastMap())
             }
         }
     }

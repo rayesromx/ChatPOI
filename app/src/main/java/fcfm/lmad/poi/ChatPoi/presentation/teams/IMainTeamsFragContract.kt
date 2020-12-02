@@ -10,6 +10,6 @@ interface IMainTeamsFragContract {
         fun getTeamData()
     }
     interface IPresenter: IBasePresenter<IView> {
-        fun loadTeamList()
+        fun loadTeamList(mainTeam:String)
     }
 }

@@ -9,7 +9,7 @@ interface IRepository<T> where T: BaseEntity {
     }
 
     fun getAll(listener:IRepositoryListener<List<T>>)
-    fun getById(id:String,listener:IRepositoryListener<T>)
+    fun getById(id:String,listener:IRepositoryListener<T?>)
     fun getByCustomParam(paramKey:String, paramValue:String,listener:IRepositoryListener<List<T>>)
 
     fun save(model: T,listener:IRepositoryListener<String>)

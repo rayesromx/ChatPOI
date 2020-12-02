@@ -9,6 +9,6 @@ interface INewSubTeamContract {
         fun loadTeamInformation(team: Team)
     }
     interface IPresenter: IBasePresenter<IView> {
-        fun loadTeamInformation(teamId:String)
+        fun loadTeamInformation(mainTeam:String)
     }
 }

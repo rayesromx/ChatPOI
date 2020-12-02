@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.item_view_chat_room_left.view.*
 class ChatRoomChatAdapter(
     private val chatRoomMessageList: List<Message>,
     val currentUser: User,
+    val chatUsers: List<User>,
     private var esGrupal: Boolean
 ) : RecyclerView.Adapter<ChatRoomChatAdapter.ChatRoomViewHolder>() {
 
@@ -25,9 +26,12 @@ class ChatRoomChatAdapter(
 
     inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentChatMessage: Message) {
-            itemView.item_view_chat_room_person.text = currentChatMessage.sender
-            itemView.item_view_chat_room_person.visibility = View.GONE
-            if(currentChatMessage.image_url.isNullOrBlank()) {
+            for (user in chatUsers){
+                if(user.uid == currentChatMessage.sender)
+                    itemView.item_view_chat_room_person.text = user.username
+            }
+
+            if(currentChatMessage.image_url.isBlank()) {
                 itemView.item_view_chat_room_message.text = currentChatMessage.message
                 itemView.item_view_chat_room_message.visibility = View.VISIBLE
                 itemView.item_view_chat_room_image.visibility = View.GONE
@@ -39,12 +43,10 @@ class ChatRoomChatAdapter(
                 itemView.item_view_chat_room_image.visibility = View.VISIBLE
             }
             //itemView.item_view_chat_room_messge_seen.text = currentChatMessage.time
-            if(esGrupal) {
+            if(!esGrupal || currentChatMessage.sender == currentUser.uid)
+                itemView.item_view_chat_room_person.visibility = View.GONE
+            else
                 itemView.item_view_chat_room_person.visibility = View.VISIBLE
-            }
-
-            //itemView.main_alert_image.text = currentAlert.image
-            //itemView.setOnClickListener{ fragAdmin.launchActivity()}
         }
     }
 

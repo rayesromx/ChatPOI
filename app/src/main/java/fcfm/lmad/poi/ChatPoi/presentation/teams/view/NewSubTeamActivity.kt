@@ -3,7 +3,8 @@ package fcfm.lmad.poi.ChatPoi.presentation.teams.view
 import android.os.Bundle
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.domain.entities.Team
-import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.ListTeams
+import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.ListSubteamsFromTeam
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.TeamRepository
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import fcfm.lmad.poi.ChatPoi.presentation.teams.INewSubTeamContract
 import fcfm.lmad.poi.ChatPoi.presentation.teams.presenter.NewSubTeamPresenter
@@ -23,7 +24,7 @@ class NewSubTeamActivity : BaseActivity(), INewSubTeamContract.IView {
         teamName = intent.getStringExtra("team_name")!!
 
         presenter = NewSubTeamPresenter(
-            ListTeams()
+            ListSubteamsFromTeam(TeamRepository())
         )
 
         presenter.attachView(this)

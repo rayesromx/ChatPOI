@@ -1,6 +1,8 @@
 package fcfm.lmad.poi.ChatPoi.presentation.chat
 import android.net.Uri
+import fcfm.lmad.poi.ChatPoi.domain.dto.SelectableUser
 import fcfm.lmad.poi.ChatPoi.domain.entities.ChatList
+import fcfm.lmad.poi.ChatPoi.domain.entities.ChatRoom
 import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
@@ -19,38 +21,43 @@ interface IChatContract {
     }
     interface IChatRoom{
         interface IView : IBaseView {
-            fun displayUserData(user:User)
-            fun displayCurrentUserData(user:User)
+            fun refreshChatRoomTabLayout(users:List<User>)
+            //deprecated
+            fun displayUserData(user: User)
             fun sendMessage()
             fun sendImage()
             fun displayChatMessages(messages:List<Message>)
         }
-        interface IPresenter: IBasePresenter<IChatRoom.IView>{
-            fun retrieveUserData(partnerUserId:String)
-            fun retrieveCurrentUserData()
-            fun sendMessage(message:String, receiver:String)
+        interface IPresenter: IBasePresenter<IView>{
+            fun retrieveChatRoomData(chatRoomId:String)
+            fun sendMessage(message:String, chatRoomReceiver:ChatRoom)
+            fun loadChatMessages(chatRoomId: String)
+
+            //deprecated
             fun sendImage(filePath: Uri, receiver:String)
-            fun loadChatMessages(sender:String, reciever: String)
+            fun retrieveUserData(partnerUserId: String)
         }
     }
 
     interface IChatListFrag{
         interface IView : IBaseView {
-            fun displayUsers(list:List<User>)
+            fun displayChatRooms(list:List<ChatRoom>)
             fun navigateToNewChat()
 
         }
         interface IPresenter: IBasePresenter<IView> {
-            fun getListOfChats()
+            fun getListOfChats(userId:String)
         }
     }
 
     interface INewChatList{
         interface IView : IBaseView {
             fun displayUsers(list:List<User>)
+            fun startChat(chatRoom: ChatRoom)
         }
         interface IPresenter: IBasePresenter<IView> {
             fun getListOfChats()
+            fun startNewChatRoom(chatRoom: ChatRoom)
         }
     }
 

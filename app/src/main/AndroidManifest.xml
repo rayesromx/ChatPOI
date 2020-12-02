@@ -18,7 +18,7 @@
             android:name=".presentation.teams.view.NewSubTeamActivity"
             android:label="@string/title_activity_new_sub_team"
             android:theme="@style/Theme.ChatPoi.NoActionBar" />
-        <activity android:name=".NewChatActivity" />
+        <activity android:name=".presentation.chat.view.NewChatActivity" />
         <activity android:name=".presentation.register.view.RegisterActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".TeamActivity" />

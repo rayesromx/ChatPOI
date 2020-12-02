@@ -3,16 +3,22 @@ package fcfm.lmad.poi.ChatPoi.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import fcfm.lmad.poi.ChatPoi.NewChatActivity
+import fcfm.lmad.poi.ChatPoi.presentation.chat.view.NewChatActivity
 import fcfm.lmad.poi.ChatPoi.R
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
+import fcfm.lmad.poi.ChatPoi.domain.entities.ChatRoom
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.RetrieveChatUserList
+import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.RetrieveChatRoomsOfUser
 import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.ChatRoomRepository
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.UserRepository
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
+import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.ChatRoomListAdapter
 import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
 import fcfm.lmad.poi.ChatPoi.presentation.chat.presenter.ChatListPresenter
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
@@ -23,7 +29,7 @@ class MainChatsFragment(
 ): BaseFragment(ctx), IChatContract.IChatListFrag.IView {
 
     lateinit var presenter: ChatListPresenter
-    lateinit var adapter: UserAdapter
+    lateinit var adapter: ChatRoomListAdapter
     override fun getFragmentLayoutID() = R.layout.main_chats_fragment
 
     override fun onCreateView(
@@ -34,24 +40,23 @@ class MainChatsFragment(
         super.onCreateView(inflater,container, savedInstanceState)
 
         presenter = ChatListPresenter(
-            RetrieveChatUserList(ListAllUsers())
+            RetrieveChatRoomsOfUser(ChatRoomRepository())
         )
         presenter.attachView(this)
-        presenter.getListOfChats()
         rootView.btn_add_new_chat.setOnClickListener{
             navigateToNewChat()
         }
-
+        presenter.getListOfChats(CustomSessionState.loggedUser.uid)
         return rootView
     }
 
-    override fun displayUsers(list: List<User>) {
+    override fun displayChatRooms(list: List<ChatRoom>) {
         if(list.isEmpty())
             rootView.txt_no_data.visibility = View.VISIBLE
         else
             rootView.txt_no_data.visibility = View.GONE
 
-        adapter = UserAdapter(list,false)
+        adapter = ChatRoomListAdapter(list)
         rootView.rv_main_chat_frag.layoutManager = LinearLayoutManager(ctx)
         rootView.rv_main_chat_frag.adapter = adapter
     }
@@ -60,4 +65,6 @@ class MainChatsFragment(
         val intent = Intent(ctx, NewChatActivity::class.java)
         ctx.startActivity(intent)
     }
+
+
 }

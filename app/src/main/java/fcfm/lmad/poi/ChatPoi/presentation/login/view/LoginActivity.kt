@@ -2,16 +2,19 @@ package fcfm.lmad.poi.ChatPoi.presentation.login.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.VoicemailContract
 import android.view.View
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import com.fcfm.poi.plantilla.presentation.login.ILoginContract
 import fcfm.lmad.poi.ChatPoi.R
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.CheckLoggedIn
 import fcfm.lmad.poi.ChatPoi.presentation.register.view.RegisterActivity
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogIn
 import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.SetupDefaultTeams
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.GetLoggedUser
 import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.TeamRepository
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.UserRepository
 import fcfm.lmad.poi.ChatPoi.presentation.login.presenter.LoginPresenter
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -20,6 +23,8 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
 
     lateinit var presenter: LoginPresenter
 
+    override fun getLayout(): Int = R.layout.activity_login
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = LoginPresenter(
@@ -27,7 +32,8 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
             CheckLoggedIn(),
             SetupDefaultTeams(
                 TeamRepository()
-            )
+            ),
+            GetLoggedUser(UserRepository())
         )
         presenter.attachView(this)
 
@@ -42,8 +48,6 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
         setup()
     }
 
-    override fun getLayout(): Int = R.layout.activity_login
-
     override fun setup() {
         presenter.setup()
     }
@@ -53,12 +57,8 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
             navigateToMain()
     }
 
-    override fun showProgressBar() {
-        pbarLogin.visibility = View.VISIBLE
-    }
-
-    override fun hideProgressBar() {
-        pbarLogin.visibility = View.GONE
+    override fun refreshUserData(loggedUser: User) {
+        CustomSessionState.loggedUser = loggedUser
     }
 
     override fun signIn() {
@@ -71,6 +71,7 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
     }
 
     override fun navigateToMain() {
+        presenter.getLoggedUserData()
         var intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
@@ -78,6 +79,14 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
 
     override fun navigateToRegister() {
         startActivity(Intent(this, RegisterActivity::class.java))
+    }
+
+    override fun showProgressBar() {
+        pbarLogin.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressBar() {
+        pbarLogin.visibility = View.GONE
     }
 
     override fun onDetachedFromWindow() {
@@ -90,39 +99,3 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
         presenter.detachView()
     }
 }
-
-
-/*
-*
-class LoginActivity : BaseActivity(), LoginContract.View {
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        btnLogin.setOnClickListener {
-            signIn()
-            //startActivity(Intent(this, MainActivity::class.java))
-        }
-        btnSignup.setOnClickListener {
-            //startActivity(Intent(this, RegisterActivity::class.java))
-        }
-    }
-    override fun getLayout(): Int = R.layout.activity_login
-
-    override fun showError(msgError: String) {
-        Toast.makeText(this,msgError, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showProgressBar() {
-        pbarLogin.visibility = View.VISIBLE
-    }
-
-    override fun hideProgressBar() {
-        pbarLogin.visibility = View.GONE
-    }
-
-    override fun signIn() {
-        toast(this,"prueba boton")
-    }
-
-
-}*/

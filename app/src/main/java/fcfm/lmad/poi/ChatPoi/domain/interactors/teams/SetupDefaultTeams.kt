@@ -1,14 +1,13 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors.teams
 
-import fcfm.lmad.poi.ChatPoi.domain.IRepository
 import fcfm.lmad.poi.ChatPoi.domain.IRepository.IRepositoryListener
 import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
-import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.FireBaseRepository
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.TeamRepository
 
 class SetupDefaultTeams(
-    private val repository: FireBaseRepository<Team>
+    private val repository: TeamRepository
 ): ISetupDefaultTeamsUseCase {
     override fun execute(listener: IBaseUseCaseCallBack<List<TeamContainer>>) {
         for (team in getTeamsList()){

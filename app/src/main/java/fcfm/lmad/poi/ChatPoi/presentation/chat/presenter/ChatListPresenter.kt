@@ -1,19 +1,19 @@
 package fcfm.lmad.poi.ChatPoi.presentation.chat.presenter
 
-import fcfm.lmad.poi.ChatPoi.domain.entities.User
+import fcfm.lmad.poi.ChatPoi.domain.entities.ChatRoom
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
-import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.IRetrieveChatUserListUseCase
+import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.IRetrieveChatRoomsOfUserUseCase
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
 import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 
 class ChatListPresenter(
-    private val retrieveChatUserList: IRetrieveChatUserListUseCase
+    private val retrieveChatRoomsOfUser: IRetrieveChatRoomsOfUserUseCase
 ): BasePresenter<IChatContract.IChatListFrag.IView>(), IChatContract.IChatListFrag.IPresenter{
-    override fun getListOfChats() {
-        retrieveChatUserList.execute(object: IBaseUseCaseCallBack<List<User>> {
-            override fun onSuccess(data: List<User>?) {
+    override fun getListOfChats(userId:String) {
+        retrieveChatRoomsOfUser.execute(userId,object: IBaseUseCaseCallBack<List<ChatRoom>> {
+            override fun onSuccess(data: List<ChatRoom>?) {
                 if(isViewAttached())
-                    view!!.displayUsers(data!!)
+                    view!!.displayChatRooms(data!!)
             }
             override fun onError(error: String) {
                 if(isViewAttached())

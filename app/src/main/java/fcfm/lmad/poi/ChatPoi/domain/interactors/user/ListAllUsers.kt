@@ -1,30 +1,30 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors.user
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import fcfm.lmad.poi.ChatPoi.domain.IRepository
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.FireBaseRepository
 
-class ListAllUsers :IListAllUsersUseCase{
+class ListAllUsers(
+    private val repository: FireBaseRepository<User>
+) :IListAllUsersUseCase{
     override fun execute(listener: IBaseUseCaseCallBack<List<User>>) {
         val firebaseUser = FirebaseAuth.getInstance().currentUser!!.uid
-        val refUsers = FirebaseDatabase.getInstance().reference.child("Users")
-        refUsers.addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
+
+        repository.getAll(object:IRepository.IRepositoryListener<List<User>>{
+            override fun onSuccess(data: List<User>) {
                 val users = ArrayList<User>()
-                for(item in snapshot.children)
+                for(user in data)
                 {
-                    val user = item.getValue(User::class.java)
-                    if(user!!.uid != firebaseUser)
+                    if(user.uid != firebaseUser)
                         users.add(user)
                 }
                 listener.onSuccess(users)
             }
-            override fun onCancelled(error: DatabaseError) {
-                listener.onError(error.message)
+
+            override fun onError(error: String) {
+                listener.onError(error)
             }
         })
     }

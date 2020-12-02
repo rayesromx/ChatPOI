@@ -1,20 +1,5 @@
 package fcfm.lmad.poi.ChatPoi.presentation.shared.view
 
-import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.domain.entities.User
-import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.RetrieveChatUserList
-import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
-import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
-import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
-import fcfm.lmad.poi.ChatPoi.presentation.chat.presenter.ChatListPresenter
-import kotlinx.android.synthetic.main.main_chats_fragment.view.*
-
 /*
 class OnlyRecyclerFragment(
     private val ctx: Context

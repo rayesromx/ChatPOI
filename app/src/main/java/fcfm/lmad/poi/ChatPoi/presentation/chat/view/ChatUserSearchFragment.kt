@@ -10,6 +10,7 @@ import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ListAllUsers
 import fcfm.lmad.poi.ChatPoi.domain.interactors.user.SearchUserByUsername
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.UserRepository
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
 import fcfm.lmad.poi.ChatPoi.presentation.chat.adapter.UserAdapter
@@ -29,9 +30,10 @@ class ChatUserSearchFragment(
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        val userRepo = UserRepository()
         presenter = SearchFragPresenter(
-            ListAllUsers(),
-            SearchUserByUsername()
+            ListAllUsers(userRepo),
+            SearchUserByUsername(userRepo)
         )
         presenter.attachView(this)
         presenter.retrieveAllUsers()

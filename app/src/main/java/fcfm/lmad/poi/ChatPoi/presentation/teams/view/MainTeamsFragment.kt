@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.CustomExpandableListAdapter
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
-import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.ListTeams
+import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.ListSubteamsFromTeam
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.TeamRepository
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
 import fcfm.lmad.poi.ChatPoi.presentation.teams.IMainTeamsFragContract
 import fcfm.lmad.poi.ChatPoi.presentation.teams.presenter.MainTeamsFragPresenter
@@ -31,14 +33,13 @@ class MainTeamsFragment (
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         presenter = MainTeamsFragPresenter(
-            ListTeams()
+            ListSubteamsFromTeam(TeamRepository())
         )
         presenter.attachView(this)
-        presenter.loadTeamList()
+        presenter.loadTeamList(CustomSessionState.loggedUser.group)
 
         rootView.btn_add_new_sub_team.setOnClickListener{
             getTeamData()
-
         }
         return rootView
     }

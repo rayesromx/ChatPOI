@@ -1,8 +1,12 @@
 package fcfm.lmad.poi.ChatPoi.infrastructure.repositories
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import fcfm.lmad.poi.ChatPoi.domain.IRepository
 import fcfm.lmad.poi.ChatPoi.domain.entities.Team
+import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
 
 class TeamRepository: FireBaseRepository<Team>("Teams") {
     override fun getValue(item: DataSnapshot) = item.getValue(Team::class.java)
@@ -28,5 +32,34 @@ class TeamRepository: FireBaseRepository<Team>("Teams") {
                 }
             })
         }
+    }
+
+    fun getTeamsList(mainTeam:String, listener:IRepository.IRepositoryListener<List<TeamContainer>>){
+
+        getTableRef().addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val teamList = ArrayList<TeamContainer>()
+                for (item in snapshot.children) {
+                    val team = item.getValue(Team::class.java)
+                    if(team!!.group != mainTeam)
+                       continue
+                    val tc = TeamContainer()
+                    tc.team = team
+                    tc.childTeams = ArrayList()
+                    for (subItem in item.children) {
+                        if(!subItem.child("parent").exists())
+                            continue
+                        val subTeam = subItem.getValue(Team::class.java)
+                        tc.childTeams!!.add(subTeam!!)
+                    }
+                    teamList.add(tc)
+                }
+                listener.onSuccess(teamList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                listener.onError(error.message)
+            }
+        })
     }
 }
