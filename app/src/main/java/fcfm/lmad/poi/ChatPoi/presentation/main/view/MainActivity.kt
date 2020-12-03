@@ -79,6 +79,7 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
     override fun refreshUserData(user: User?) {
         txt_username.text = user!!.username
         Picasso.get().load(user.profile_img).into(img_user_image)
+        CustomSessionState.loggedUser.stars = user.stars
     }
 
     override fun logOut() {

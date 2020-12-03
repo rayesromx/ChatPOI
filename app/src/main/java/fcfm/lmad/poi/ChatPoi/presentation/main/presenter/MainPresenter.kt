@@ -41,6 +41,7 @@ class MainPresenter(
             override fun onSuccess(data: User?) {
                 if(!isViewAttached()) return
                 view!!.refreshUserData(data)
+
             }
             override fun onError(error: String) {
                 if(!isViewAttached()) return

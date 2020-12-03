@@ -56,7 +56,7 @@ class TaskActivity : BaseActivity(), ITaskContract.IView {
     override fun getLayout() = R.layout.activity_task
     override fun onTaskCompleted(task: CompletedTask) {
         CustomSessionState.loggedUser.stars += CustomSessionState.currentTask.points.toInt()
-
+        presenter.updateUser()
         finish()
     }
 

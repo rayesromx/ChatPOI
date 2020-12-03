@@ -46,9 +46,26 @@ class MainTasksFragment(
             val intent = Intent(ctx, NewTaskActivity::class.java)
             ctx.startActivity(intent)
         }
+        loadAll()
+        return rootView
+    }
+
+    fun loadAll(){
         presenter.loadTasks(CustomSessionState.loggedUser.group)
         presenter.loadCpmpletedTasks(CustomSessionState.loggedUser.uid)
-        return rootView
+        if(rootView != null)
+            if(rootView.user_count_starts != null)
+                rootView.user_count_starts.text = CustomSessionState.loggedUser.stars.toString()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadAll()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadAll()
     }
 
     override fun getFragmentLayoutID()=R.layout.main_tasks_fragment
@@ -61,7 +78,7 @@ class MainTasksFragment(
         adapter = MainTasksFragmentAdapter(dtask,this)
         rootView.rvMainTaskFrag.adapter = adapter
 
-        user_count_starts.text = CustomSessionState.loggedUser.stars.toString()
+        rootView.user_count_starts.text = CustomSessionState.loggedUser.stars.toString()
     }
 
     override fun onCompletedTasksLoaded(tasks: List<CompletedTask>) {

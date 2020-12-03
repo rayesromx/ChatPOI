@@ -86,6 +86,7 @@ tools:context=".presentation.teams.view.NewTaskActivity">
             <EditText
                 android:id="@+id/etxt_task_points"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 

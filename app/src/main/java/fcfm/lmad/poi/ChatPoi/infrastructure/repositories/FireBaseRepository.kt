@@ -15,6 +15,7 @@ abstract class FireBaseRepository<T>(
     protected final fun getFirsTableChild(id:String) = getTableRef().child(id)
 
     override fun getAll(listener: IRepository.IRepositoryListener<List<T>>) {
+        Thread.sleep(500)
         getTableRef().addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val models = ArrayList<T>()
@@ -31,6 +32,7 @@ abstract class FireBaseRepository<T>(
     }
 
     override fun getById(id:String, listener: IRepository.IRepositoryListener<T?>) {
+        Thread.sleep(500)
         getFirsTableChild(id).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()) {
@@ -52,6 +54,7 @@ abstract class FireBaseRepository<T>(
     }
 
     protected fun getByCustomParam(dbRef:DatabaseReference, paramKey: String, paramValue: String, listener: IRepository.IRepositoryListener<List<T>>) {
+        Thread.sleep(500)
         dbRef.orderByChild(paramKey).equalTo(paramValue).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val models = ArrayList<T>()
@@ -82,6 +85,7 @@ abstract class FireBaseRepository<T>(
     }
 
     protected fun saveData(dbRef: DatabaseReference, model: T, listener: IRepository.IRepositoryListener<String>) {
+        Thread.sleep(500)
         dbRef.setValue(model.getHastMap())
             .addOnCompleteListener {
                 if (it.isSuccessful)
