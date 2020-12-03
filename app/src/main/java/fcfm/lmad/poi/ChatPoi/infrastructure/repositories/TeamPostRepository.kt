@@ -6,3 +6,4 @@ import fcfm.lmad.poi.ChatPoi.models.TeamPost
 class TeamPostRepository: FireBaseRepository<TeamPost>("TeamPost") {
     override fun getValue(item: DataSnapshot) = item.getValue(TeamPost::class.java)
 }
+

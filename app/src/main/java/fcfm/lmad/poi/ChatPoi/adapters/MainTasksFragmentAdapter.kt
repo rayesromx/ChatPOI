@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.models.Task
+import fcfm.lmad.poi.ChatPoi.domain.entities.Task
+import fcfm.lmad.poi.ChatPoi.presentation.tasks.IMainTasksFragContract
 import kotlinx.android.synthetic.main.item_view_alert.view.*
 
 class MainTasksFragmentAdapter(
     private val taskList: List<Task>,
-    val fragAdmin: IFragmentAdmin
+    private val parentView: IMainTasksFragContract.IView
 ) :
     RecyclerView.Adapter<MainTasksFragmentAdapter.TaskViewHolder>() {
 
@@ -21,9 +22,7 @@ class MainTasksFragmentAdapter(
             itemView.task_description.text = currentTask.description
             itemView.task_points.text = currentTask.points
             itemView.task_due_date.text = currentTask.dueDate
-            //itemView.main_alert_icon.text = currentAlert.icon
-            //itemView.main_alert_image.text = currentAlert.image
-            itemView.setOnClickListener{ fragAdmin.launchActivity(3)}
+            itemView.setOnClickListener{parentView.onTaskSelected(currentTask)}
         }
     }
 

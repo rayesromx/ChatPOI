@@ -6,7 +6,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
     android:layout_margin="8dp"
-tools:context=".NewTaskActivity">
+tools:context=".presentation.teams.view.NewTaskActivity">
 
 
     <LinearLayout
@@ -36,8 +36,9 @@ tools:context=".NewTaskActivity">
                 android:textSize="16dp" />
 
             <EditText
+                android:id="@+id/etxt_task_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,8 +52,9 @@ tools:context=".NewTaskActivity">
                 android:textSize="16dp" />
 
             <EditText
+                android:id="@+id/etxt_task_dueDate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,8 +68,9 @@ tools:context=".NewTaskActivity">
                 android:textSize="16dp" />
 
             <EditText
+                android:id="@+id/etxt_task_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,8 +84,9 @@ tools:context=".NewTaskActivity">
                 android:textSize="16dp" />
 
             <EditText
+                android:id="@+id/etxt_task_points"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </LinearLayout>
@@ -91,7 +95,7 @@ tools:context=".NewTaskActivity">
 
 
     <Button
-        android:id="@+id/btn_add_new_team_post"
+        android:id="@+id/btn_add_new_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Agregar Grupo"

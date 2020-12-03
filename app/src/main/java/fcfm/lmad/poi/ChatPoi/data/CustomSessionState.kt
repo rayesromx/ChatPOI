@@ -1,8 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.data
 
-import fcfm.lmad.poi.ChatPoi.domain.entities.ChatRoom
-import fcfm.lmad.poi.ChatPoi.domain.entities.Team
-import fcfm.lmad.poi.ChatPoi.domain.entities.User
+import fcfm.lmad.poi.ChatPoi.domain.entities.*
 import fcfm.lmad.poi.ChatPoi.models.TeamPost
 
 object CustomSessionState {
@@ -11,6 +9,8 @@ object CustomSessionState {
     lateinit var userTeam:String
     lateinit var currentTeam: Team
     lateinit var currentTeamPost: TeamPost
+    lateinit var currentTask: Task
+    var currentCompletedTasks = CompletedTask()
     var canDecrypt = true
 
     fun encrypt(input:String) = AESUtils.encrypt(input)

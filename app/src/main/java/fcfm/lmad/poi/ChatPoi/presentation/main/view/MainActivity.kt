@@ -20,11 +20,11 @@ import fcfm.lmad.poi.ChatPoi.presentation.chat.view.MainChatsFragment
 import fcfm.lmad.poi.ChatPoi.presentation.login.view.LoginActivity
 import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
 import fcfm.lmad.poi.ChatPoi.presentation.main.presenter.MainPresenter
+import fcfm.lmad.poi.ChatPoi.presentation.tasks.view.MainTasksFragment
 import fcfm.lmad.poi.ChatPoi.presentation.teams.view.MainTeamsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 interface IFragmentAdmin{
-    fun changeFragment(fragment: Fragment, tag: String)
     fun launchActivity(type: Int)
 }
 
@@ -94,7 +94,7 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
             fragments.add(MainAlertsFragment())
             fragments.add(MainChatsFragment(activity))
             fragments.add(MainTeamsFragment(activity))
-            fragments.add(BlankFragment2())
+            fragments.add(MainTasksFragment(activity))
         }
         override fun getItemCount(): Int = fragments.size
         override fun createFragment(position: Int): Fragment = fragments[position]
