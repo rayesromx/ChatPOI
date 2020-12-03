@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp"
-    tools:context=".NewPostActivity">
+    tools:context=".presentation.posts.view.NewPostActivity">
 
 
     <LinearLayout
@@ -35,9 +35,9 @@
                 android:textSize="16dp" />
 
             <EditText
+                android:id="@+id/etxt_new_team_post_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,21 +51,20 @@
                 android:textSize="16dp" />
 
             <EditText
+                android:id="@+id/etxt_new_team_post_message"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
     </LinearLayout>
 
 
-
-
     <Button
-        android:id="@+id/btnAddNewGroup"
+        android:id="@+id/btn_add_new_team_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Agregar Grupo"
+        android:text="Agregar nueva publicacion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

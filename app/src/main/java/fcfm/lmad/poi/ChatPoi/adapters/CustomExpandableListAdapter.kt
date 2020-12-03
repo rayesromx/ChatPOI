@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.TeamActivity
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
+import fcfm.lmad.poi.ChatPoi.presentation.teams.view.TeamActivity
 import fcfm.lmad.poi.ChatPoi.domain.entities.Team
 import fcfm.lmad.poi.ChatPoi.domain.entities.TeamContainer
 
@@ -41,9 +42,10 @@ class CustomExpandableListAdapter internal constructor(
         expandedListTextView.text = team.name
 
         convertView.setOnClickListener{
-            val intent = Intent(context,TeamActivity::class.java)
+            val intent = Intent(context, TeamActivity::class.java)
             intent.putExtra("team_id",team.uid)
             intent.putExtra("team_name",team.name)
+            CustomSessionState.currentTeam = team
             context.startActivity(intent)
         }
 

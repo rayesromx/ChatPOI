@@ -39,7 +39,7 @@ class MainTeamsFragment (
         presenter.loadTeamList(CustomSessionState.loggedUser.group)
 
         rootView.btn_add_new_sub_team.setOnClickListener{
-            getTeamData()
+            addNewSubTeam()
         }
         return rootView
     }
@@ -49,7 +49,7 @@ class MainTeamsFragment (
         rootView.llMainTeamsContainer.setAdapter(adapter)
     }
 
-    override fun getTeamData(){
+    override fun addNewSubTeam(){
         val intent = Intent(context, NewSubTeamActivity::class.java)
         ctx.startActivity(intent)
     }

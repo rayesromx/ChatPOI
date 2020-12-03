@@ -53,12 +53,16 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
     }
 
     override fun refreshUserLogStatus(isLoggedIn: Boolean) {
-        if(isLoggedIn)
+        if(isLoggedIn) {
             navigateToMain()
+
+        }
     }
 
     override fun refreshUserData(loggedUser: User) {
         CustomSessionState.loggedUser = loggedUser
+        CustomSessionState.userTeam = loggedUser.group
+        navigateToMain()
     }
 
     override fun signIn() {
@@ -71,8 +75,7 @@ class LoginActivity : BaseActivity(), ILoginContract.IView {
     }
 
     override fun navigateToMain() {
-        presenter.getLoggedUserData()
-        var intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

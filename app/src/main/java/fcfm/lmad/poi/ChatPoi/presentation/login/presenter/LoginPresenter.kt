@@ -50,9 +50,14 @@ class LoginPresenter(
     override fun refreshUserLogStatus() {
         checkLoggedIn.execute(object:IBaseUseCaseCallBack<Boolean>{
             override fun onSuccess(data: Boolean?) {
-                view!!.refreshUserLogStatus(data!!)
+               // view!!.refreshUserLogStatus(data!!)
+                if(!isViewAttached()) return
+                if(data!!) {
+                    getLoggedUserData()
+                }
             }
             override fun onError(error: String) {
+                if(!isViewAttached()) return
                 view!!.showError(error)
             }
         })

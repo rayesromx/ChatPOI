@@ -32,17 +32,12 @@
                     android:layout_marginLeft="16dp"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/txt_team_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="General"
                         android:textColor="#fff"
                         android:layout_marginBottom="2dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="LMAD"
-                        android:textSize="10dp"
-                        android:textColor="#fff" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -51,41 +46,22 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_teams_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout_team_main" />
+
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/teamRoomOptionTabLayout"
+        android:id="@+id/tab_layout_team_main"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamRoomAppBarLayout">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabTeamRoomPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Publicaciones" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabTeamRoomFiles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Archivos" />
-
-
-    </com.google.android.material.tabs.TabLayout>
-
-
-    <FrameLayout
-        android:id="@+id/teamRoomFrameContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamRoomOptionTabLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/teamRoomAppBarLayout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddNewTeamPost"

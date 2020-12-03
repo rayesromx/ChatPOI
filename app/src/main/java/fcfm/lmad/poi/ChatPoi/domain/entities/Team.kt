@@ -10,7 +10,7 @@ class Team: BaseEntity {
 
     override fun getHastMap():HashMap<String,Any?>{
         val messageHashMap = HashMap<String, Any?>()
-        messageHashMap["id"] =  uid
+        messageHashMap["uid"] =  uid
         messageHashMap["name"] = name
         messageHashMap["group"] = group
         messageHashMap["parent"] = parent

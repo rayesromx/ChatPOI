@@ -91,7 +91,7 @@ tools:context=".NewTaskActivity">
 
 
     <Button
-        android:id="@+id/btnAddNewGroup"
+        android:id="@+id/btn_add_new_team_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Agregar Grupo"

@@ -11,3 +11,4 @@ interface IListSubteamsFromTeamUseCase:  IBaseUseCaseWithInput<String,List<TeamC
 interface IGetTeamByIdUseCase: IBaseUseCaseWithInput<String,Team> {}
 interface IGetTeamByNameUseCase: IBaseUseCaseWithInput<String,Team> {}
 interface IAssociateUserWithTeamUseCase: IBaseUseCaseWithInput<TeamUser,TeamUser> {}
+interface ICreateNewTeamUseCase: IBaseUseCaseWithInput<Team,Team> {}

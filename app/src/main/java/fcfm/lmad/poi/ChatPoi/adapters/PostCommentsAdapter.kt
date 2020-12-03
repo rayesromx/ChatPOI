@@ -17,7 +17,7 @@ class PostCommentsAdapter(
 
     inner class PostCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(currentPost: TeamPost) {
-            itemView.post_from.text = currentPost.from
+            itemView.post_from.text = currentPost.senderName
             itemView.post_message.text = currentPost.message
             itemView.post_time.text = currentPost.time
             //itemView.post_image.text = currentAlert.image

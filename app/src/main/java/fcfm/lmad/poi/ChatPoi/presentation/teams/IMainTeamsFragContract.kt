@@ -7,7 +7,7 @@ interface IMainTeamsFragContract {
     interface IView{
         fun showError(errorMsg:String)
         fun loadTeamList(teamList: List<TeamContainer>)
-        fun getTeamData()
+        fun addNewSubTeam()
     }
     interface IPresenter: IBasePresenter<IView> {
         fun loadTeamList(mainTeam:String)

@@ -1,47 +1,45 @@
 package fcfm.lmad.poi.ChatPoi.fragments
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.TeamRoomPostAdapter
-import fcfm.lmad.poi.ChatPoi.viewModels.TeamPostViewModel
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
+import fcfm.lmad.poi.ChatPoi.domain.interactors.posts.ListAllPostsFromTeam
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.TeamPostRepository
+import fcfm.lmad.poi.ChatPoi.models.TeamPost
+import fcfm.lmad.poi.ChatPoi.presentation.posts.presenter.TeamRoomPostsPresenter
+import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
+import fcfm.lmad.poi.ChatPoi.presentation.teams.ITeamPostsContract
 import kotlinx.android.synthetic.main.team_room_posts_fragment.view.*
 
 class TeamRoomPostsFragment(
-    var fragAdmin: IFragmentAdmin
-) : Fragment() {
+    private val ctx: Context
+): BaseFragment(ctx), ITeamPostsContract.IView{
 
-    private lateinit var rootView: View
-    private lateinit var viewModel: TeamPostViewModel
+    lateinit var presenter: TeamRoomPostsPresenter
     lateinit var adapter: TeamRoomPostAdapter
+
+    override fun getFragmentLayoutID() = R.layout.team_room_posts_fragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         rootView = inflater.inflate(R.layout.team_room_posts_fragment, container, false)
-        initializeVM()
+        presenter = TeamRoomPostsPresenter(
+            ListAllPostsFromTeam(TeamPostRepository())
+        )
+        presenter.attachView(this)
+        presenter.getAllPostFromTeam(CustomSessionState.currentTeam)
         return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initializeVM()
-    }
-
-    private fun initializeVM()
-    {
-        if (!this::viewModel.isInitialized)
-        {
-            viewModel = ViewModelProvider(this).get(TeamPostViewModel::class.java)
-            viewModel.load()
-            adapter = TeamRoomPostAdapter(viewModel.modelList,fragAdmin)
-            rootView.rvTeamRoomPostsFrag.adapter = adapter
-        }
+    override fun onGetAllPostFromTeam(posts: List<TeamPost>) {
+        adapter = TeamRoomPostAdapter(posts)
+        rootView.rvTeamRoomPostsFrag.adapter = adapter
     }
 }

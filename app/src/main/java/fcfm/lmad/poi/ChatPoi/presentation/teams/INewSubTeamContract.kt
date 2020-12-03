@@ -7,8 +7,10 @@ interface INewSubTeamContract {
     interface IView{
         fun showError(errorMsg:String)
         fun loadTeamInformation(team: Team)
+        fun onTeamCreated(team:Team)
     }
     interface IPresenter: IBasePresenter<IView> {
         fun loadTeamInformation(mainTeam:String)
+        fun createNewSubTeam(team: Team)
     }
 }
