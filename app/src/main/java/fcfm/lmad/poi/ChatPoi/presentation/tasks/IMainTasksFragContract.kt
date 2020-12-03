@@ -42,5 +42,6 @@ interface ITaskContract{
         fun setTaskAsCompleted(task:CompletedTask)
         fun sendFile(fm: FileMsg,task:Task)
         fun loadAttachments(task:Task)
+        fun updateUser()
     }
 }

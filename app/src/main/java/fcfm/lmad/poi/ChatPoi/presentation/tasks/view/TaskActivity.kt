@@ -9,7 +9,10 @@ import fcfm.lmad.poi.ChatPoi.domain.dto.FileMsg
 import fcfm.lmad.poi.ChatPoi.domain.entities.CompletedTask
 import fcfm.lmad.poi.ChatPoi.domain.interactors.files.SendFile
 import fcfm.lmad.poi.ChatPoi.domain.interactors.tasks.SetTaskAsCompletedByUser
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.UpdateUser
 import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.CompletedTaskRepository
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.FireBaseRepository
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.UserRepository
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import fcfm.lmad.poi.ChatPoi.presentation.tasks.ITaskContract
 import fcfm.lmad.poi.ChatPoi.presentation.tasks.presenter.TaskPresenter
@@ -23,7 +26,8 @@ class TaskActivity : BaseActivity(), ITaskContract.IView {
 
         presenter = TaskPresenter(
             SetTaskAsCompletedByUser(CompletedTaskRepository()),
-            SendFile()
+            SendFile(),
+            UpdateUser(UserRepository())
         )
 
         presenter.attachView(this)
@@ -52,6 +56,7 @@ class TaskActivity : BaseActivity(), ITaskContract.IView {
     override fun getLayout() = R.layout.activity_task
     override fun onTaskCompleted(task: CompletedTask) {
         CustomSessionState.loggedUser.stars += CustomSessionState.currentTask.points.toInt()
+
         finish()
     }
 

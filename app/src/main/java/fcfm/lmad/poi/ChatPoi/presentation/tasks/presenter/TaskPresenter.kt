@@ -1,18 +1,22 @@
 package fcfm.lmad.poi.ChatPoi.presentation.tasks.presenter
 
 import android.net.Uri
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.dto.FileMsg
 import fcfm.lmad.poi.ChatPoi.domain.entities.CompletedTask
 import fcfm.lmad.poi.ChatPoi.domain.entities.Task
+import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
 import fcfm.lmad.poi.ChatPoi.domain.interactors.files.SendFile
 import fcfm.lmad.poi.ChatPoi.domain.interactors.tasks.SetTaskAsCompletedByUser
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.UpdateUser
 import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 import fcfm.lmad.poi.ChatPoi.presentation.tasks.ITaskContract
 
 class TaskPresenter(
     private val setTaskAsCompletedByUser: SetTaskAsCompletedByUser,
-    private val sendFile: SendFile
+    private val sendFile: SendFile,
+    private val updateUser: UpdateUser
 ): BasePresenter<ITaskContract.IView>(), ITaskContract.IPresenter{
     override fun setTaskAsCompleted(task: CompletedTask){
         setTaskAsCompletedByUser.execute(task, object: IBaseUseCaseCallBack<CompletedTask> {
@@ -43,5 +47,18 @@ class TaskPresenter(
 
     override fun loadAttachments(task: Task) {
         TODO("Not yet implemented")
+    }
+
+    override fun updateUser()
+    {
+        updateUser.execute(CustomSessionState.loggedUser, object:IBaseUseCaseCallBack<User>{
+            override fun onSuccess(data: User?) {
+               // CustomSessionState.loggedUser.stars += CustomSessionState.currentTask.points.toInt()
+            }
+
+            override fun onError(error: String) {
+            }
+
+        })
     }
 }

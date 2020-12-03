@@ -20,6 +20,7 @@ import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.TaskRepository
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseFragment
 import fcfm.lmad.poi.ChatPoi.presentation.tasks.IMainTasksFragContract
 import fcfm.lmad.poi.ChatPoi.presentation.tasks.presenter.MainTaskPresenter
+import kotlinx.android.synthetic.main.main_tasks_fragment.*
 import kotlinx.android.synthetic.main.main_tasks_fragment.view.*
 
 class MainTasksFragment(
@@ -59,6 +60,8 @@ class MainTasksFragment(
             dtask.add(DisplayableTask(t, false))
         adapter = MainTasksFragmentAdapter(dtask,this)
         rootView.rvMainTaskFrag.adapter = adapter
+
+        user_count_starts.text = CustomSessionState.loggedUser.stars.toString()
     }
 
     override fun onCompletedTasksLoaded(tasks: List<CompletedTask>) {
