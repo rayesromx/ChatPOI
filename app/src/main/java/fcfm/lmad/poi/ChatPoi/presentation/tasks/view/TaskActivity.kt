@@ -1,16 +1,19 @@
-package fcfm.lmad.poi.ChatPoi
+package fcfm.lmad.poi.ChatPoi.presentation.tasks.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.OpenableColumns
+import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
+import fcfm.lmad.poi.ChatPoi.domain.dto.FileMsg
 import fcfm.lmad.poi.ChatPoi.domain.entities.CompletedTask
+import fcfm.lmad.poi.ChatPoi.domain.interactors.files.SendFile
 import fcfm.lmad.poi.ChatPoi.domain.interactors.tasks.SetTaskAsCompletedByUser
 import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.CompletedTaskRepository
 import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import fcfm.lmad.poi.ChatPoi.presentation.tasks.ITaskContract
 import fcfm.lmad.poi.ChatPoi.presentation.tasks.presenter.TaskPresenter
 import kotlinx.android.synthetic.main.activity_task.*
-
-
 
 class TaskActivity : BaseActivity(), ITaskContract.IView {
 
@@ -19,7 +22,8 @@ class TaskActivity : BaseActivity(), ITaskContract.IView {
         super.onCreate(savedInstanceState)
 
         presenter = TaskPresenter(
-            SetTaskAsCompletedByUser(CompletedTaskRepository())
+            SetTaskAsCompletedByUser(CompletedTaskRepository()),
+            SendFile()
         )
 
         presenter.attachView(this)
@@ -50,4 +54,36 @@ class TaskActivity : BaseActivity(), ITaskContract.IView {
         CustomSessionState.loggedUser.stars += CustomSessionState.currentTask.points.toInt()
         finish()
     }
+
+    override fun uploadFile() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "*/*"
+        startActivityForResult(Intent.createChooser(intent,"Selecciona el archivo"),438)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        var fm =FileMsg()
+        fm.fileName =  "archivo"
+        if(requestCode == 438 && resultCode == RESULT_OK && data!= null && data.data!=null){
+            toast(this,"Se esta cargando la imagen")
+            data.data?.let { returnUri ->
+                contentResolver.query(returnUri, null, null, null, null)
+            }?.use { cursor ->
+                /*
+                 * Get the column indexes of the data in the Cursor,
+                 * move to the first row in the Cursor, get the data,
+                 * and display it.
+                 */
+                val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                cursor.moveToFirst()
+                fm.fileName = cursor.getString(nameIndex)
+            }
+            fm.filePath = data.data!!
+            presenter.sendFile(fm, CustomSessionState.currentTask)
+            presenter.loadAttachments(CustomSessionState.currentTask)
+        }
+    }
+
 }

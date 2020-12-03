@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="fcfm.lmad.poi.ChatPoi">
     
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +23,9 @@
             android:theme="@style/Theme.ChatPoi.NoActionBar" />
         <activity android:name=".presentation.chat.view.NewChatActivity" />
         <activity android:name=".presentation.register.view.RegisterActivity" />
-        <activity android:name=".PostActivity" />
+        <activity android:name=".presentation.posts.view.PostActivity" />
         <activity android:name=".presentation.teams.view.TeamActivity" />
-        <activity android:name=".TaskActivity" />
+        <activity android:name=".presentation.tasks.view.TaskActivity" />
         <activity android:name=".presentation.chat.view.ChatRoomActivity" />
         <activity android:name=".presentation.main.view.MainActivity" />
         <activity android:name=".presentation.login.view.LoginActivity">

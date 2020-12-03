@@ -3,7 +3,7 @@ package fcfm.lmad.poi.ChatPoi.presentation.teams.view
 import android.content.Intent
 import android.os.Bundle
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.TaskActivity
+import fcfm.lmad.poi.ChatPoi.presentation.tasks.view.TaskActivity
 import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.entities.Task
 import fcfm.lmad.poi.ChatPoi.domain.interactors.tasks.CreateNewTask

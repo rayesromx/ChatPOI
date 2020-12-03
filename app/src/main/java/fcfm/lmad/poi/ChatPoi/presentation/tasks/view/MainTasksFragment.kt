@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import fcfm.lmad.poi.ChatPoi.presentation.teams.view.NewTaskActivity
 import fcfm.lmad.poi.ChatPoi.R
-import fcfm.lmad.poi.ChatPoi.TaskActivity
-import fcfm.lmad.poi.ChatPoi.adapters.CustomExpandableListAdapter
 import fcfm.lmad.poi.ChatPoi.adapters.MainTasksFragmentAdapter
 import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.entities.CompletedTask
+import fcfm.lmad.poi.ChatPoi.domain.entities.DisplayableTask
 import fcfm.lmad.poi.ChatPoi.domain.entities.Task
 import fcfm.lmad.poi.ChatPoi.domain.interactors.tasks.GetCompletedTasks
 import fcfm.lmad.poi.ChatPoi.domain.interactors.tasks.GetGroupTasks
@@ -53,14 +52,26 @@ class MainTasksFragment(
 
     override fun getFragmentLayoutID()=R.layout.main_tasks_fragment
 
-
+    var dtask = ArrayList<DisplayableTask>()
     override fun onTasksLoaded(tasks: List<Task>) {
-        adapter = MainTasksFragmentAdapter(tasks,this)
+        dtask.clear()
+        for (t in tasks)
+            dtask.add(DisplayableTask(t, false))
+        adapter = MainTasksFragmentAdapter(dtask,this)
         rootView.rvMainTaskFrag.adapter = adapter
     }
 
     override fun onCompletedTasksLoaded(tasks: List<CompletedTask>) {
-        CustomSessionState.currentCompletedTasks = tasks[0]
+        if(tasks.size > 0) {
+            CustomSessionState.currentCompletedTasks = tasks[0]
+            for (t in dtask){
+                if(CustomSessionState.currentCompletedTasks.taskIds.contains(t.task.uid))
+                    t.isCompleted = true
+            }
+
+            adapter = MainTasksFragmentAdapter(dtask,this)
+            rootView.rvMainTaskFrag.adapter = adapter
+        }
     }
 
     override fun onTaskSelected(task: Task) {

@@ -1,6 +1,7 @@
 package fcfm.lmad.poi.ChatPoi.presentation.chat.presenter
 
 import android.net.Uri
+import fcfm.lmad.poi.ChatPoi.domain.dto.FileMsg
 import fcfm.lmad.poi.ChatPoi.domain.dto.RetrieveChat
 import fcfm.lmad.poi.ChatPoi.domain.dto.ImageMsg
 import fcfm.lmad.poi.ChatPoi.domain.entities.ChatMessageReference
@@ -9,6 +10,8 @@ import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
 import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.*
+import fcfm.lmad.poi.ChatPoi.domain.interactors.files.IDownloadFileUseCase
+import fcfm.lmad.poi.ChatPoi.domain.interactors.files.ISendFileUseCase
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.IGetLoggedUserDataUseCase
 import fcfm.lmad.poi.ChatPoi.domain.interactors.user.ISearchUserByIdUseCase
 import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
@@ -19,7 +22,7 @@ class ChatRoomPresenter(
     private val searchUserById: ISearchUserByIdUseCase,
     private val sendMessage: ISendMessageUseCase,
     private val retrieveChatConversation: IRetrieveChatConversationUseCase,
-
+    private val downloadFile: IDownloadFileUseCase,
         //deprecated
     private val sendImage: ISendImageUseCase,
 ):BasePresenter<IChatContract.IChatRoom.IView>(), IChatContract.IChatRoom.IPresenter {
@@ -78,6 +81,28 @@ class ChatRoomPresenter(
         })
     }
 
+    override fun startDownloadingUrl(msg:Message) {
+        val fm = FileMsg()
+        fm.fileName = "nuevo archivo"
+        fm.msg = msg
+        when {
+            msg.image_url.toLowerCase().contains("jpg") -> fm.extension = "jpg"
+            msg.image_url.toLowerCase().contains("png") -> fm.extension = "png"
+            msg.image_url.toLowerCase().contains("pdf") -> fm.extension = "pdf"
+        }
+
+        downloadFile.execute(fm,object:IBaseUseCaseCallBack<Long>{
+            override fun onSuccess(data: Long?) {
+                view?.onDownloadFile(data!!)
+            }
+
+            override fun onError(error: String) {
+                view?.showError(error)
+            }
+
+        })
+    }
+
     override fun retrieveUserData(partnerUserId: String) {
         searchUserById.execute(partnerUserId, object:IBaseUseCaseCallBack<User>{
             override fun onSuccess(data: User?) {
@@ -89,15 +114,15 @@ class ChatRoomPresenter(
         })
     }
 
-    override fun sendImage(filePath: Uri, receiver: String) {
+    override fun sendImage(fileName:String, filePath: Uri, receiver: String) {
         val msg = Message()
         msg.receiver = receiver
         msg.chat_room_id = receiver
-        val imageMessage = ImageMsg(msg,filePath)
+        val imageMessage = ImageMsg(msg,filePath,fileName)
 
-        sendImage.execute(imageMessage, object:IBaseUseCaseCallBack<Message>{
-            override fun onSuccess(data: Message?) {
-                //view?.displayUserData(data!!)
+        sendImage.execute(imageMessage, object:IBaseUseCaseCallBack<FileMsg>{
+            override fun onSuccess(data: FileMsg?) {
+
             }
             override fun onError(error: String) {
                 view?.showError(error)

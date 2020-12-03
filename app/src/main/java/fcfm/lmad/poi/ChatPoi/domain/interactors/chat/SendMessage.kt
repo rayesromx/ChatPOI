@@ -11,7 +11,6 @@ class SendMessage(
 ): ISendMessageUseCase {
     override fun execute(input: Message, listener: IBaseUseCaseCallBack<Message>) {
         input.sender = CustomSessionState.loggedUser.uid
-
         input.message = CustomSessionState.encrypt(input.message)
 
         messageRepository.save(input, object: IRepository.IRepositoryListener<String>{

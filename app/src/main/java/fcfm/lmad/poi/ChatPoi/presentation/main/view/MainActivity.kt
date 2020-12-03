@@ -45,19 +45,19 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
         view_pager_container.adapter =  ViewPager2Adapter(this)
         TabLayoutMediator(tab_layout_main, view_pager_container) { tab, position ->
             when(position){
-                0 -> {
+               /* 0 -> {
                     tab.text ="Alertas"
                     tab.setIcon(R.drawable.ic_baseline_notifications_24)
-                }
-                1 -> {
+                }*/
+                0 -> {
                     tab.text = "Chats"
                     tab.setIcon(R.drawable.ic_forum_24px)
                 }
-                2 -> {
+                1 -> {
                     tab.text ="Grupos"
                     tab.setIcon(R.drawable.ic_people_black_18dp)
                 }
-                3 -> {
+               2 -> {
                     tab.text ="Tareas"
                     tab.setIcon(R.drawable.ic_baseline_work_24)
                 }
@@ -91,7 +91,7 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
     internal class ViewPager2Adapter(activity:AppCompatActivity) : FragmentStateAdapter(activity){
         private val fragments = ArrayList<Fragment>()
         init {
-            fragments.add(MainAlertsFragment())
+           // fragments.add(MainAlertsFragment())
             fragments.add(MainChatsFragment(activity))
             fragments.add(MainTeamsFragment(activity))
             fragments.add(MainTasksFragment(activity))

@@ -35,3 +35,5 @@ class CompletedTask: BaseEntity() {
     }
 }
 
+data class DisplayableTask(val task:Task, var isCompleted:Boolean)
+

@@ -27,14 +27,16 @@ interface IChatContract {
             fun sendMessage()
             fun sendImage()
             fun displayChatMessages(messages:List<Message>)
+            fun onDownloadFile(downloadId:Long)
+            fun startDownloadingUrl(msg:Message)
         }
         interface IPresenter: IBasePresenter<IView>{
             fun retrieveChatRoomData(chatRoomId:String)
             fun sendMessage(message:String, chatRoomReceiver:ChatRoom)
             fun loadChatMessages(chatRoomId: String)
-
+            fun startDownloadingUrl(msg:Message)
             //deprecated
-            fun sendImage(filePath: Uri, receiver:String)
+            fun sendImage(fileName:String, filePath: Uri, receiver:String)
             fun retrieveUserData(partnerUserId: String)
         }
     }

@@ -1,5 +1,7 @@
 package fcfm.lmad.poi.ChatPoi.presentation.tasks
 
+import android.net.Uri
+import fcfm.lmad.poi.ChatPoi.domain.dto.FileMsg
 import fcfm.lmad.poi.ChatPoi.domain.entities.CompletedTask
 import fcfm.lmad.poi.ChatPoi.domain.entities.Task
 import fcfm.lmad.poi.ChatPoi.presentation.shared.IBasePresenter
@@ -34,8 +36,11 @@ interface ITaskContract{
     interface IView{
         fun showError(errorMsg:String)
         fun onTaskCompleted(task:CompletedTask)
+        fun uploadFile()
     }
     interface IPresenter: IBasePresenter<IView> {
         fun setTaskAsCompleted(task:CompletedTask)
+        fun sendFile(fm: FileMsg,task:Task)
+        fun loadAttachments(task:Task)
     }
 }

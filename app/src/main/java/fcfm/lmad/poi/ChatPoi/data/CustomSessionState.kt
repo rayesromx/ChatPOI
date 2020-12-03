@@ -10,6 +10,8 @@ object CustomSessionState {
     lateinit var currentTeam: Team
     lateinit var currentTeamPost: TeamPost
     lateinit var currentTask: Task
+    val docsFolder = "chatPoi/docs/"
+
     var currentCompletedTasks = CompletedTask()
     var canDecrypt = true
 

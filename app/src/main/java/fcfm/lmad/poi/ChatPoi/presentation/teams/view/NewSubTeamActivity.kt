@@ -16,8 +16,6 @@ import kotlinx.android.synthetic.main.activity_new_sub_team.*
 class NewSubTeamActivity : BaseActivity(), INewSubTeamContract.IView {
 
     lateinit var presenter: NewSubTeamPresenter
-
-
     override fun getLayout() = R.layout.activity_new_sub_team
 
     override fun onCreate(savedInstanceState: Bundle?) {

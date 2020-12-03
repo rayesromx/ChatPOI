@@ -1,14 +1,12 @@
-package fcfm.lmad.poi.ChatPoi
+package fcfm.lmad.poi.ChatPoi.presentation.posts.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.adapters.PostCommentsAdapter
 import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.models.TeamPost
-import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import kotlinx.android.synthetic.main.activity_post.*
 
 class PostActivity : AppCompatActivity()  {

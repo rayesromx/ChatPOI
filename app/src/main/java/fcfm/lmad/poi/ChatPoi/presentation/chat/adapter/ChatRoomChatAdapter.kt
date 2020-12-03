@@ -9,12 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.models.ChatRoomMessage
+import fcfm.lmad.poi.ChatPoi.presentation.chat.IChatContract
 import kotlinx.android.synthetic.main.item_view_chat_room_left.view.*
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 
 class ChatRoomChatAdapter(
+    private val parentView:  IChatContract.IChatRoom.IView,
     private val chatRoomMessageList: List<Message>,
     val currentUser: User,
     val chatUsers: List<User>,
@@ -37,10 +43,22 @@ class ChatRoomChatAdapter(
                 itemView.item_view_chat_room_image.visibility = View.GONE
             }
             else {
-                Picasso.get().load(currentChatMessage.image_url)
-                    .into(itemView.item_view_chat_room_image)
-                itemView.item_view_chat_room_message.visibility = View.GONE
-                itemView.item_view_chat_room_image.visibility = View.VISIBLE
+                if(currentChatMessage.image_url.contains(".jpg")) {
+                    Picasso.get().load(currentChatMessage.image_url)
+                        .into(itemView.item_view_chat_room_image)
+                    itemView.item_view_chat_room_message.visibility = View.GONE
+                    itemView.item_view_chat_room_image.visibility = View.VISIBLE
+
+                }else {
+                    itemView.item_view_chat_room_message.visibility = View.VISIBLE
+                    itemView.item_view_chat_room_message.text = "Descargar archivo"
+                    itemView.item_view_chat_room_image.visibility = View.GONE
+                    itemView.setOnClickListener{
+                        parentView.startDownloadingUrl(currentChatMessage)
+                    }
+                }
+
+
             }
             //itemView.item_view_chat_room_messge_seen.text = currentChatMessage.time
             if(!esGrupal || currentChatMessage.sender == currentUser.uid)

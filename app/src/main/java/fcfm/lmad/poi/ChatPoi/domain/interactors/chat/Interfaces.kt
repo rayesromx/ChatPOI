@@ -1,5 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors.chat
 
+import fcfm.lmad.poi.ChatPoi.domain.dto.FileMsg
 import fcfm.lmad.poi.ChatPoi.domain.dto.ImageMsg
 import fcfm.lmad.poi.ChatPoi.domain.entities.ChatMessageReference
 import fcfm.lmad.poi.ChatPoi.domain.entities.ChatRoom
@@ -12,7 +13,7 @@ interface IRetrieveChatRoomsOfUserUseCase: IBaseUseCaseWithInput<String, List<Ch
 interface IRetrieveChatConversationUseCase: IBaseUseCaseWithInput<String, List<Message>> {}
 interface IRetrieveChatUserListUseCase: IBaseUseCase<List<User>>
 interface ISendMessageUseCase: IBaseUseCaseWithInput<Message, Message> {}
-interface ISendImageUseCase: IBaseUseCaseWithInput<ImageMsg, Message> {}
+interface ISendImageUseCase: IBaseUseCaseWithInput<ImageMsg, FileMsg> {}
 
 interface ICreateNewChatRoomUseCase: IBaseUseCaseWithInput<ChatRoom, ChatRoom> {}
 interface IGetCharRoomDataUseCase: IBaseUseCaseWithInput<String, ChatRoom> {}
