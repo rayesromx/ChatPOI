@@ -16,10 +16,12 @@ interface ITeamPostsContract {
     interface IView{
         fun showError(errorMsg:String)
         fun onGetAllPostFromTeam(posts:List<TeamPost>)
+        fun navigateToTeamPost(teamPost:TeamPost)
     }
     interface IPresenter: IBasePresenter<IView> {
         fun getAllPostFromTeam(team: Team)
     }
+
 }
 
 interface INewTeamPostContract {

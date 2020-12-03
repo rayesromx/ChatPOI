@@ -8,6 +8,7 @@ class User: BaseEntity {
      var status: String = ""
     var username: String = ""
     var email: String = ""
+    var stars: Int = 0
 
     constructor()
     constructor(
@@ -17,7 +18,8 @@ class User: BaseEntity {
             status: String,
             uid: String,
             username: String,
-            email: String
+            email: String,
+            stars:Int
     ) {
         this.group = group
         this.profile_img = profile_img
@@ -26,6 +28,7 @@ class User: BaseEntity {
         this.uid = uid
         this.username = username
         this.email = email
+        this.stars = stars
     }
 
     override fun getHastMap():HashMap<String,Any?>{
@@ -37,6 +40,7 @@ class User: BaseEntity {
         messageHashMap["uid"] = uid
         messageHashMap["username"] = username
         messageHashMap["email"] = email
+        messageHashMap["stars"] = stars
         return messageHashMap
     }
 }

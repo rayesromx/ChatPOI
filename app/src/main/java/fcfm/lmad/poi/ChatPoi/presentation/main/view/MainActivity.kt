@@ -9,11 +9,14 @@ import fcfm.lmad.poi.ChatPoi.presentation.shared.view.BaseActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.*
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.GetLoggedUserData
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.LogOut
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.UpdateUser
 import fcfm.lmad.poi.ChatPoi.fragments.MainAlertsFragment
-import fcfm.lmad.poi.ChatPoi.fragments.MainChatsFragment
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.UserRepository
+import fcfm.lmad.poi.ChatPoi.presentation.chat.view.MainChatsFragment
 import fcfm.lmad.poi.ChatPoi.presentation.login.view.LoginActivity
 import fcfm.lmad.poi.ChatPoi.presentation.main.IMainContract
 import fcfm.lmad.poi.ChatPoi.presentation.main.presenter.MainPresenter
@@ -33,7 +36,8 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
         super.onCreate(savedInstanceState)
         presenter = MainPresenter(
             LogOut(),
-            GetLoggedUserData()
+            GetLoggedUserData(),
+            UpdateUser(UserRepository())
         )
 
         presenter.attachView(this)
@@ -63,6 +67,9 @@ class MainActivity : BaseActivity(), IMainContract.IMainView {
 
         btn_main_logout.setOnClickListener{
             logOut()
+        }
+        img_user_image.setOnClickListener{
+            CustomSessionState.canDecrypt = !CustomSessionState.canDecrypt
         }
         presenter.refreshUserData()
     }

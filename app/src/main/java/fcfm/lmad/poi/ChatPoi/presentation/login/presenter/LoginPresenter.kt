@@ -10,6 +10,8 @@ import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ICheckLoggedInUseCase
 import fcfm.lmad.poi.ChatPoi.domain.interactors.login.ILogInUseCase
 import fcfm.lmad.poi.ChatPoi.domain.interactors.teams.ISetupDefaultTeamsUseCase
 import fcfm.lmad.poi.ChatPoi.domain.interactors.user.IGetLoggedUserUseCase
+import fcfm.lmad.poi.ChatPoi.domain.interactors.user.UpdateUser
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.UserRepository
 import fcfm.lmad.poi.ChatPoi.presentation.shared.presenter.BasePresenter
 
 class LoginPresenter(
@@ -79,6 +81,15 @@ class LoginPresenter(
             override fun onSuccess(data: User?) {
                 if(!isViewAttached())  return
                 CustomSessionState.loggedUser = data!!
+                val updateUser = UpdateUser(UserRepository())
+                CustomSessionState.loggedUser.status = "online"
+                updateUser.execute(CustomSessionState.loggedUser, object: IBaseUseCaseCallBack<User>{
+                    override fun onSuccess(data: User?) {
+                    }
+                    override fun onError(error: String) {
+                        view!!.showError(error)
+                    }
+                })
                 view!!.refreshUserData(data)
             }
 

@@ -19,6 +19,10 @@ class NewChatSelectableListAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(selectableUser: SelectableUser) {
             itemView.txt_selectable_username.text = selectableUser.user.username
+            if(selectableUser.user.status == "online")
+                itemView.txt_selectable_user_status.text = "Disponible"
+            else
+                itemView.txt_selectable_user_status.text = "Desconectado"
             Picasso.get().load(selectableUser.user.profile_img).into(itemView.cimgv_selectable_profile_image)
             itemView.setOnClickListener{
                 selectableUser.isSelected = !selectableUser.isSelected
@@ -26,6 +30,8 @@ class NewChatSelectableListAdapter(
                     itemView.cv_selectable_chat.backgroundTintList = ContextCompat.getColorStateList(ctx,R.color.selected_item)
                 else
                     itemView.cv_selectable_chat.backgroundTintList = ContextCompat.getColorStateList(ctx,R.color.unselected_item)
+
+
             }
         }
     }

@@ -19,7 +19,7 @@ class CreateNewChatRoom(
             override fun onSuccess(data: List<ChatRoom>) {
                 for (chat in data){
                     if(chat.users.size == 2 && chat.users.containsAll(input.users)){
-                        listener.onError("Ya existe un chat con los usuarios seleccionados")
+                        //listener.onError("Ya existe un chat con los usuarios seleccionados")
                         return
                     }
                 }

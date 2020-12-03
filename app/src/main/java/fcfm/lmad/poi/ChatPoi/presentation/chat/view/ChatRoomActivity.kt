@@ -9,13 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
-import fcfm.lmad.poi.ChatPoi.domain.entities.ChatRoom
 import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.entities.User
 import fcfm.lmad.poi.ChatPoi.domain.interactors.chat.*
-import fcfm.lmad.poi.ChatPoi.domain.interactors.login.GetLoggedUserData
 import fcfm.lmad.poi.ChatPoi.domain.interactors.user.SearchUserById
-import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.ChatMessageReferenceRepository
 import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.ChatRoomRepository
 import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.MessageRepository
 import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.UserRepository
@@ -39,23 +36,19 @@ class ChatRoomActivity : BaseActivity(), IChatContract.IChatRoom.IView {
             GetCharRoomData(ChatRoomRepository()),
             SearchUserById(UserRepository()),
             SendMessage(MessageRepository()),
-            //RelateChatRoomMessage(ChatMessageReferenceRepository()),
             RetrieveChatConversation(MessageRepository()),
-            SendImage()
+            SendImage(MessageRepository())
         )
         presenter.attachView(this)
-        //userIdVisit = intent.getStringExtra("visit_id")!!
-        //presenter.retrieveUserData(userIdVisit)
         btn_send_message.setOnClickListener{
             sendMessage()
             etxt_message_to_be_sent.setText("")
         }
 
         btn_attach_image.setOnClickListener{
-           //sendImage()
+           sendImage()
         }
         presenter.retrieveChatRoomData(CustomSessionState.currentChatRoom.uid)
-        //presenter.loadChatMessages(CustomSessionState.currentChatRoom.uid)
     }
 
     override fun refreshChatRoomTabLayout(users:List<User>){
@@ -103,8 +96,8 @@ class ChatRoomActivity : BaseActivity(), IChatContract.IChatRoom.IView {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 438 && resultCode == RESULT_OK && data!= null && data.data!=null){
             toast(this,"Se esta cargando la imagen")
-            //presenter.sendImage( data.data!!,userIdVisit)
-            //presenter.loadChatMessages(currentUser.uid,userIdVisit)
+            presenter.sendImage( data.data!!,CustomSessionState.currentChatRoom.uid)
+            presenter.loadChatMessages(CustomSessionState.currentChatRoom.uid)
         }
     }
 

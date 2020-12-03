@@ -10,6 +10,7 @@ import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.entities.ChatRoom
 import fcfm.lmad.poi.ChatPoi.presentation.chat.view.ChatRoomActivity
+import kotlinx.android.synthetic.main.selectable_chat_item_view.view.*
 import kotlinx.android.synthetic.main.user_search_item_view_layout.view.*
 
 class ChatRoomListAdapter(
@@ -33,10 +34,11 @@ class ChatRoomListAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(chatRoom: ChatRoom) {
             itemView.user_search_item_user_name.text = chatRoom.name
-            if(chatRoom.users.size>1)
+            if(chatRoom.users.size>2)
                 itemView.user_search_item_profile_image.visibility = View.GONE
             else
                 itemView.user_search_item_profile_image.visibility = View.VISIBLE
+
             //Picasso.get().load(user.profile_img).into(itemView.user_search_item_profile_image)
             itemView.setOnClickListener{
                 val intent = Intent(ctx, ChatRoomActivity::class.java)

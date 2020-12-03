@@ -23,4 +23,10 @@ abstract class BaseActivity : AppCompatActivity()
     fun showError(errorMsg: String) {
         toast(this,errorMsg)
     }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+
 }

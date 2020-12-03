@@ -1,5 +1,6 @@
 package fcfm.lmad.poi.ChatPoi.domain.interactors.chat
 
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.domain.IRepository
 import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
@@ -12,9 +13,13 @@ class RetrieveChatConversation(
         val messages = ArrayList<Message>()
         messageRepository.getAll(object:IRepository.IRepositoryListener<List<Message>>{
             override fun onSuccess(data: List<Message>) {
+                messages.clear()
                 for(msg in data){
                     if(msg.chat_room_id != input) continue
-                        messages.add(msg)
+
+                    if(msg.image_url.isBlank())
+                        msg.message = CustomSessionState.decrypt(msg.message)
+                    messages.add(msg)
                 }
                 listener.onSuccess(messages)
             }

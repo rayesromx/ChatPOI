@@ -11,4 +11,12 @@ object CustomSessionState {
     lateinit var userTeam:String
     lateinit var currentTeam: Team
     lateinit var currentTeamPost: TeamPost
+    var canDecrypt = true
+
+    fun encrypt(input:String) = AESUtils.encrypt(input)
+    fun decrypt(input:String) :String{
+        if(canDecrypt)
+            return AESUtils.decrypt(input)
+        return input
+    }
 }

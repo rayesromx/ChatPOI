@@ -92,6 +92,7 @@ class ChatRoomPresenter(
     override fun sendImage(filePath: Uri, receiver: String) {
         val msg = Message()
         msg.receiver = receiver
+        msg.chat_room_id = receiver
         val imageMessage = ImageMsg(msg,filePath)
 
         sendImage.execute(imageMessage, object:IBaseUseCaseCallBack<Message>{

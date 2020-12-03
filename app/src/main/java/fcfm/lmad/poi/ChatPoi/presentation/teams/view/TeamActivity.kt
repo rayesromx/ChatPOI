@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import fcfm.lmad.poi.ChatPoi.R
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
 import fcfm.lmad.poi.ChatPoi.fragments.TeamRoomFilesFragment
 import fcfm.lmad.poi.ChatPoi.fragments.TeamRoomPostsFragment
 import fcfm.lmad.poi.ChatPoi.presentation.posts.view.NewPostActivity
@@ -45,6 +46,9 @@ class TeamActivity: BaseActivity(), ITeamContract.IView {
             val intent = Intent(this, NewPostActivity::class.java)
             startActivity(intent)
         }
+
+        txt_team_name.text = CustomSessionState.currentTeam.name
+
     }
 
     internal class ViewPager2Adapter(activity: AppCompatActivity) : FragmentStateAdapter(activity){

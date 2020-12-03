@@ -3,23 +3,23 @@ package fcfm.lmad.poi.ChatPoi.domain.interactors.chat
 import android.net.Uri
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import fcfm.lmad.poi.ChatPoi.data.CustomSessionState
+import fcfm.lmad.poi.ChatPoi.domain.IRepository
 import fcfm.lmad.poi.ChatPoi.domain.dto.ImageMsg
 import fcfm.lmad.poi.ChatPoi.domain.entities.Message
 import fcfm.lmad.poi.ChatPoi.domain.interactors.IBaseUseCaseCallBack
+import fcfm.lmad.poi.ChatPoi.infrastructure.repositories.MessageRepository
 
-class SendImage: ISendImageUseCase {
+class SendImage(
+        private val messageRepository: MessageRepository
+): ISendImageUseCase {
     override fun execute(input: ImageMsg, listener: IBaseUseCaseCallBack<Message>) {
-        val reference = FirebaseDatabase.getInstance().reference
-        input.message.uid = reference.push().key!!
-        input.message.sender=  FirebaseAuth.getInstance().currentUser!!.uid
 
+        input.message.sender = CustomSessionState.loggedUser.uid
         val storageReference = FirebaseStorage.getInstance().reference.child("ChatImages")
-        val dbReference = FirebaseDatabase.getInstance().reference
         val filePath = storageReference.child(input.message.uid+".jpg")
 
         val uploadTask: StorageTask<*>
@@ -38,8 +38,17 @@ class SendImage: ISendImageUseCase {
                 input.message.message = "Envio una imagen"
                 input.message.image_url = url
 
-                dbReference.child("Chats").child(input.message.uid).setValue(input.message.getHastMap())
+                messageRepository.save(input.message, object: IRepository.IRepositoryListener<String>{
+                    override fun onSuccess(data: String) {
+                        listener.onSuccess(input.message)
+                    }
+                    override fun onError(error: String) {
+                        listener.onError(error)
+                    }
+                })
             }
         }
+
+
     }
 }

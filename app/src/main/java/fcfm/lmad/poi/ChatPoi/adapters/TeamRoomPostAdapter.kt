@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import fcfm.lmad.poi.ChatPoi.presentation.main.view.IFragmentAdmin
 import fcfm.lmad.poi.ChatPoi.R
 import fcfm.lmad.poi.ChatPoi.models.TeamPost
+import fcfm.lmad.poi.ChatPoi.presentation.teams.ITeamPostsContract
 import kotlinx.android.synthetic.main.item_view_team_post.view.*
 
 class TeamRoomPostAdapter(
-    private val teamPostsList: List<TeamPost>
+    private val teamPostsList: List<TeamPost>,
+    private val parentView: ITeamPostsContract.IView
 ) : RecyclerView.Adapter<TeamRoomPostAdapter.TeamRoomViewHolder>() {
 
     inner class TeamRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,7 +21,7 @@ class TeamRoomPostAdapter(
             itemView.team_post_time.text = currentPost.time
             itemView.team_post_message.text = currentPost.message
             //itemView.main_alert_image.text = currentAlert.image
-            //itemView.setOnClickListener{ fragAdmin.launchActivity(1)}
+            itemView.setOnClickListener{parentView.navigateToTeamPost(currentPost)}
         }
     }
 
