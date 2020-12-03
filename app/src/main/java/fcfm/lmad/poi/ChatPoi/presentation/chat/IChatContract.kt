@@ -29,6 +29,7 @@ interface IChatContract {
             fun displayChatMessages(messages:List<Message>)
             fun onDownloadFile(downloadId:Long)
             fun startDownloadingUrl(msg:Message)
+            fun displayLargeImage()
         }
         interface IPresenter: IBasePresenter<IView>{
             fun retrieveChatRoomData(chatRoomId:String)

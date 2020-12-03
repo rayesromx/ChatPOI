@@ -48,6 +48,10 @@ class ChatRoomChatAdapter(
                         .into(itemView.item_view_chat_room_image)
                     itemView.item_view_chat_room_message.visibility = View.GONE
                     itemView.item_view_chat_room_image.visibility = View.VISIBLE
+                    itemView.setOnClickListener{
+                        CustomSessionState.currentImage = currentChatMessage.image_url
+                        parentView.displayLargeImage()
+                    }
 
                 }else {
                     itemView.item_view_chat_room_message.visibility = View.VISIBLE

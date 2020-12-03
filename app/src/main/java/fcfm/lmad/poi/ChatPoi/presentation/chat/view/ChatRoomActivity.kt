@@ -134,6 +134,12 @@ class ChatRoomActivity : BaseActivity(), IChatContract.IChatRoom.IView {
     override fun startDownloadingUrl(msg:Message){
         presenter.startDownloadingUrl(msg)
     }
+
+    override fun displayLargeImage() {
+        val intent = Intent(this, ShowImageActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onDownloadFile(downloadId:Long){
         var br = object:BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {

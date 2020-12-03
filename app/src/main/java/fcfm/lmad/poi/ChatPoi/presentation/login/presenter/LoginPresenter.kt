@@ -80,6 +80,11 @@ class LoginPresenter(
         getLoggedUser.execute(object: IBaseUseCaseCallBack<User>{
             override fun onSuccess(data: User?) {
                 if(!isViewAttached())  return
+                if(data == null){
+                    view!!.showError("No existe informacion del usuario")
+                    return
+                }
+
                 CustomSessionState.loggedUser = data!!
                 val updateUser = UpdateUser(UserRepository())
                 CustomSessionState.loggedUser.status = "online"
